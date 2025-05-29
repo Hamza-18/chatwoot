@@ -4,29 +4,29 @@ import { useAccount } from 'dashboard/composables/useAccount';
 import { useCamelCase } from 'dashboard/composables/useTransformKeys';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 
-export function useCaptain() {
+export function useAiAgent() {
   const store = useStore();
   const { isCloudFeatureEnabled, currentAccount } = useAccount();
 
-  const captainEnabled = computed(() => {
-    return isCloudFeatureEnabled(FEATURE_FLAGS.CAPTAIN);
+  const aiAgentEnabled = computed(() => {
+    return isCloudFeatureEnabled(FEATURE_FLAGS.AI_AGENT);
   });
 
-  const captainLimits = computed(() => {
-    return currentAccount.value?.limits?.captain;
+  const aiAgentLimits = computed(() => {
+    return currentAccount.value?.limits?.aiAgent;
   });
 
   const documentLimits = computed(() => {
-    if (captainLimits.value?.documents) {
-      return useCamelCase(captainLimits.value.documents);
+    if (aiAgentLimits.value?.documents) {
+      return useCamelCase(aiAgentLimits.value.documents);
     }
 
     return null;
   });
 
   const responseLimits = computed(() => {
-    if (captainLimits.value?.responses) {
-      return useCamelCase(captainLimits.value.responses);
+    if (aiAgentLimits.value?.responses) {
+      return useCamelCase(aiAgentLimits.value.responses);
     }
 
     return null;
@@ -37,8 +37,8 @@ export function useCaptain() {
   };
 
   return {
-    captainEnabled,
-    captainLimits,
+    aiAgentEnabled,
+    aiAgentLimits,
     documentLimits,
     responseLimits,
     fetchLimits,

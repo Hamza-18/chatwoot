@@ -26,7 +26,7 @@ const emit = defineEmits(['submit', 'cancel']);
 const { t } = useI18n();
 
 const formState = {
-  uiFlags: useMapGetter('captainTopics/getUIFlags'),
+  uiFlags: useMapGetter('aiAgentTopics/getUIFlags'),
 };
 
 const initialState = {
@@ -51,7 +51,7 @@ const isLoading = computed(() => formState.uiFlags.value.creatingItem);
 
 const getErrorMessage = (field, errorKey) => {
   return v$.value[field].$error
-    ? t(`CAPTAIN.TOPICS.FORM.${errorKey}.ERROR`)
+    ? t(`AI_AGENT.TOPICS.FORM.${errorKey}.ERROR`)
     : '';
 };
 
@@ -111,44 +111,44 @@ watch(
   <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
     <Input
       v-model="state.name"
-      :label="t('CAPTAIN.TOPICS.FORM.NAME.LABEL')"
-      :placeholder="t('CAPTAIN.TOPICS.FORM.NAME.PLACEHOLDER')"
+      :label="t('AI_AGENT.TOPICS.FORM.NAME.LABEL')"
+      :placeholder="t('AI_AGENT.TOPICS.FORM.NAME.PLACEHOLDER')"
       :message="formErrors.name"
       :message-type="formErrors.name ? 'error' : 'info'"
     />
 
     <Editor
       v-model="state.description"
-      :label="t('CAPTAIN.TOPICS.FORM.DESCRIPTION.LABEL')"
-      :placeholder="t('CAPTAIN.TOPICS.FORM.DESCRIPTION.PLACEHOLDER')"
+      :label="t('AI_AGENT.TOPICS.FORM.DESCRIPTION.LABEL')"
+      :placeholder="t('AI_AGENT.TOPICS.FORM.DESCRIPTION.PLACEHOLDER')"
       :message="formErrors.description"
       :message-type="formErrors.description ? 'error' : 'info'"
     />
 
     <Input
       v-model="state.productName"
-      :label="t('CAPTAIN.TOPICS.FORM.PRODUCT_NAME.LABEL')"
-      :placeholder="t('CAPTAIN.TOPICS.FORM.PRODUCT_NAME.PLACEHOLDER')"
+      :label="t('AI_AGENT.TOPICS.FORM.PRODUCT_NAME.LABEL')"
+      :placeholder="t('AI_AGENT.TOPICS.FORM.PRODUCT_NAME.PLACEHOLDER')"
       :message="formErrors.productName"
       :message-type="formErrors.productName ? 'error' : 'info'"
     />
 
     <fieldset class="flex flex-col gap-2.5">
       <legend class="mb-3 text-sm font-medium text-n-slate-12">
-        {{ t('CAPTAIN.TOPICS.FORM.FEATURES.TITLE') }}
+        {{ t('AI_AGENT.TOPICS.FORM.FEATURES.TITLE') }}
       </legend>
 
       <label class="flex items-center gap-2">
         <input v-model="state.featureFaq" type="checkbox" />
         <span class="text-sm font-medium text-n-slate-12">
-          {{ t('CAPTAIN.TOPICS.FORM.FEATURES.ALLOW_CONVERSATION_FAQS') }}
+          {{ t('AI_AGENT.TOPICS.FORM.FEATURES.ALLOW_CONVERSATION_FAQS') }}
         </span>
       </label>
 
       <label class="flex items-center gap-2">
         <input v-model="state.featureMemory" type="checkbox" />
         <span class="text-sm font-medium text-n-slate-12">
-          {{ t('CAPTAIN.TOPICS.FORM.FEATURES.ALLOW_MEMORIES') }}
+          {{ t('AI_AGENT.TOPICS.FORM.FEATURES.ALLOW_MEMORIES') }}
         </span>
       </label>
     </fieldset>
@@ -158,13 +158,13 @@ watch(
         type="button"
         variant="faded"
         color="slate"
-        :label="t('CAPTAIN.FORM.CANCEL')"
+        :label="t('AI_AGENT.FORM.CANCEL')"
         class="w-full bg-n-alpha-2 n-blue-text hover:bg-n-alpha-3"
         @click="handleCancel"
       />
       <Button
         type="submit"
-        :label="t(`CAPTAIN.FORM.${mode.toUpperCase()}`)"
+        :label="t(`AI_AGENT.FORM.${mode.toUpperCase()}`)"
         class="w-full"
         :is-loading="isLoading"
         :disabled="isLoading"

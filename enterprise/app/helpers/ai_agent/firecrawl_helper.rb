@@ -1,6 +1,6 @@
-module Captain::FirecrawlHelper
+module AiAgent::FirecrawlHelper
   def generate_firecrawl_token(topic_id, account_id)
-    api_key = InstallationConfig.find_by(name: 'CAPTAIN_FIRECRAWL_API_KEY')&.value
+    api_key = InstallationConfig.find_by(name: 'AI_AGENT_FIRECRAWL_API_KEY')&.value
     return nil unless api_key
 
     token_base = "#{api_key[-4..]}#{topic_id}#{account_id}"

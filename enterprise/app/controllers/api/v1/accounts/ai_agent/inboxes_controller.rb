@@ -1,6 +1,6 @@
-class Api::V1::Accounts::Captain::InboxesController < Api::V1::Accounts::BaseController
+class Api::V1::Accounts::AiAgent::InboxesController < Api::V1::Accounts::BaseController
   before_action :current_account
-  before_action -> { check_authorization(Captain::Topic) }
+  before_action -> { check_authorization(AiAgent::Topic) }
 
   before_action :set_topic
   def index
@@ -9,13 +9,13 @@ class Api::V1::Accounts::Captain::InboxesController < Api::V1::Accounts::BaseCon
 
   def create
     inbox = Current.account.inboxes.find(topic_params[:inbox_id])
-    @captain_inbox = @topic.captain_inboxes.build(inbox: inbox)
-    @captain_inbox.save!
+    @ai_agentinbox = @topic.ai_agentinboxes.build(inbox: inbox)
+    @ai_agentinbox.save!
   end
 
   def destroy
-    @captain_inbox = @topic.captain_inboxes.find_by!(inbox_id: permitted_params[:inbox_id])
-    @captain_inbox.destroy!
+    @ai_agentinbox = @topic.ai_agentinboxes.find_by!(inbox_id: permitted_params[:inbox_id])
+    @ai_agentinbox.destroy!
     head :no_content
   end
 
@@ -26,7 +26,7 @@ class Api::V1::Accounts::Captain::InboxesController < Api::V1::Accounts::BaseCon
   end
 
   def account_topics
-    @account_topics ||= Current.account.captain_topics
+    @account_topics ||= Current.account.ai_agenttopics
   end
 
   def permitted_params

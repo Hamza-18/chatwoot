@@ -1,4 +1,4 @@
-class Captain::Tools::BaseService
+class AiAgent::Tools::BaseService
   attr_accessor :topic
 
   def initialize(topic, user: nil)

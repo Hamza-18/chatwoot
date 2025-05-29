@@ -1,10 +1,10 @@
-class Captain::Documents::ResponseBuilderJob < ApplicationJob
+class AiAgent::Documents::ResponseBuilderJob < ApplicationJob
   queue_as :low
 
   def perform(document)
     reset_previous_responses(document)
 
-    faqs = Captain::Llm::FaqGeneratorService.new(document.content).generate
+    faqs = AiAgent::Llm::FaqGeneratorService.new(document.content).generate
     faqs.each do |faq|
       create_response(faq, document)
     end

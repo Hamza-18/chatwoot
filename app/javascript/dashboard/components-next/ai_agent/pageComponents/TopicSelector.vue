@@ -17,10 +17,10 @@ const emit = defineEmits(['update']);
 const { t } = useI18n();
 const isFilterOpen = ref(false);
 
-const topics = useMapGetter('captainTopics/getRecords');
+const topics = useMapGetter('aiAgentTopics/getRecords');
 const topicOptions = computed(() => [
   {
-    label: t(`CAPTAIN.RESPONSES.FILTER.ALL_TOPICS`),
+    label: t(`AI_AGENT.RESPONSES.FILTER.ALL_TOPICS`),
     value: 'all',
     action: 'filter',
   },
@@ -35,7 +35,7 @@ const selectedTopicLabel = computed(() => {
   const topic = topicOptions.value.find(
     option => option.value === props.topicId
   );
-  return t('CAPTAIN.RESPONSES.FILTER.TOPIC', {
+  return t('AI_AGENT.RESPONSES.FILTER.TOPIC', {
     selected: topic ? topic.label : '',
   });
 });

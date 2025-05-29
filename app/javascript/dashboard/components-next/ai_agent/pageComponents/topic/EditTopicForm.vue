@@ -27,7 +27,7 @@ const emit = defineEmits(['submit']);
 const { t } = useI18n();
 
 const formState = {
-  uiFlags: useMapGetter('captainTopics/getUIFlags'),
+  uiFlags: useMapGetter('aiAgentTopics/getUIFlags'),
 };
 
 const initialState = {
@@ -172,31 +172,28 @@ watch(
 <template>
   <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
     <!-- Basic Information Section -->
-    <Accordion
-      :title="t('CAPTAIN.TOPICS.FORM.SECTIONS.BASIC_INFO')"
-      is-open
-    >
+    <Accordion :title="t('AI_AGENT.TOPICS.FORM.SECTIONS.BASIC_INFO')" is-open>
       <div class="flex flex-col gap-4 pt-4">
         <Input
           v-model="state.name"
-          :label="t('CAPTAIN.TOPICS.FORM.NAME.LABEL')"
-          :placeholder="t('CAPTAIN.TOPICS.FORM.NAME.PLACEHOLDER')"
+          :label="t('AI_AGENT.TOPICS.FORM.NAME.LABEL')"
+          :placeholder="t('AI_AGENT.TOPICS.FORM.NAME.PLACEHOLDER')"
           :message="formErrors.name"
           :message-type="formErrors.name ? 'error' : 'info'"
         />
 
         <Editor
           v-model="state.description"
-          :label="t('CAPTAIN.TOPICS.FORM.DESCRIPTION.LABEL')"
-          :placeholder="t('CAPTAIN.TOPICS.FORM.DESCRIPTION.PLACEHOLDER')"
+          :label="t('AI_AGENT.TOPICS.FORM.DESCRIPTION.LABEL')"
+          :placeholder="t('AI_AGENT.TOPICS.FORM.DESCRIPTION.PLACEHOLDER')"
           :message="formErrors.description"
           :message-type="formErrors.description ? 'error' : 'info'"
         />
 
         <Input
           v-model="state.productName"
-          :label="t('CAPTAIN.TOPICS.FORM.PRODUCT_NAME.LABEL')"
-          :placeholder="t('CAPTAIN.TOPICS.FORM.PRODUCT_NAME.PLACEHOLDER')"
+          :label="t('AI_AGENT.TOPICS.FORM.PRODUCT_NAME.LABEL')"
+          :placeholder="t('AI_AGENT.TOPICS.FORM.PRODUCT_NAME.PLACEHOLDER')"
           :message="formErrors.productName"
           :message-type="formErrors.productName ? 'error' : 'info'"
         />
@@ -207,18 +204,18 @@ watch(
             :loading="isLoading"
             @click="handleBasicInfoUpdate"
           >
-            {{ t('CAPTAIN.TOPICS.FORM.UPDATE') }}
+            {{ t('AI_AGENT.TOPICS.FORM.UPDATE') }}
           </Button>
         </div>
       </div>
     </Accordion>
 
     <!-- Instructions Section -->
-    <Accordion :title="t('CAPTAIN.TOPICS.FORM.SECTIONS.INSTRUCTIONS')">
+    <Accordion :title="t('AI_AGENT.TOPICS.FORM.SECTIONS.INSTRUCTIONS')">
       <div class="flex flex-col gap-4">
         <Editor
           v-model="state.instructions"
-          :placeholder="t('CAPTAIN.TOPICS.FORM.INSTRUCTIONS.PLACEHOLDER')"
+          :placeholder="t('AI_AGENT.TOPICS.FORM.INSTRUCTIONS.PLACEHOLDER')"
           :message="formErrors.instructions"
           :max-length="20000"
           :message-type="formErrors.instructions ? 'error' : 'info'"
@@ -226,7 +223,7 @@ watch(
 
         <div class="flex flex-col gap-2 mt-4">
           <label class="text-sm font-medium text-n-slate-12">
-            {{ t('CAPTAIN.TOPICS.FORM.TEMPERATURE.LABEL') }}
+            {{ t('AI_AGENT.TOPICS.FORM.TEMPERATURE.LABEL') }}
           </label>
           <div class="flex items-center gap-4">
             <input
@@ -240,14 +237,14 @@ watch(
             <span class="text-sm text-n-slate-12">{{ state.temperature }}</span>
           </div>
           <p class="text-sm text-n-slate-11 italic">
-            {{ t('CAPTAIN.TOPICS.FORM.TEMPERATURE.DESCRIPTION') }}
+            {{ t('AI_AGENT.TOPICS.FORM.TEMPERATURE.DESCRIPTION') }}
           </p>
         </div>
         <div class="flex justify-end">
           <Button
             size="small"
             :loading="isLoading"
-            :label="t('CAPTAIN.TOPICS.FORM.UPDATE')"
+            :label="t('AI_AGENT.TOPICS.FORM.UPDATE')"
             @click="handleInstructionsUpdate"
           />
         </div>
@@ -255,23 +252,21 @@ watch(
     </Accordion>
 
     <!-- Greeting Messages Section -->
-    <Accordion :title="t('CAPTAIN.TOPICS.FORM.SECTIONS.SYSTEM_MESSAGES')">
+    <Accordion :title="t('AI_AGENT.TOPICS.FORM.SECTIONS.SYSTEM_MESSAGES')">
       <div class="flex flex-col gap-4 pt-4">
         <Editor
           v-model="state.handoffMessage"
-          :label="t('CAPTAIN.TOPICS.FORM.HANDOFF_MESSAGE.LABEL')"
-          :placeholder="
-            t('CAPTAIN.TOPICS.FORM.HANDOFF_MESSAGE.PLACEHOLDER')
-          "
+          :label="t('AI_AGENT.TOPICS.FORM.HANDOFF_MESSAGE.LABEL')"
+          :placeholder="t('AI_AGENT.TOPICS.FORM.HANDOFF_MESSAGE.PLACEHOLDER')"
           :message="formErrors.handoffMessage"
           :message-type="formErrors.handoffMessage ? 'error' : 'info'"
         />
 
         <Editor
           v-model="state.resolutionMessage"
-          :label="t('CAPTAIN.TOPICS.FORM.RESOLUTION_MESSAGE.LABEL')"
+          :label="t('AI_AGENT.TOPICS.FORM.RESOLUTION_MESSAGE.LABEL')"
           :placeholder="
-            t('CAPTAIN.TOPICS.FORM.RESOLUTION_MESSAGE.PLACEHOLDER')
+            t('AI_AGENT.TOPICS.FORM.RESOLUTION_MESSAGE.PLACEHOLDER')
           "
           :message="formErrors.resolutionMessage"
           :message-type="formErrors.resolutionMessage ? 'error' : 'info'"
@@ -281,7 +276,7 @@ watch(
           <Button
             size="small"
             :loading="isLoading"
-            :label="t('CAPTAIN.TOPICS.FORM.UPDATE')"
+            :label="t('AI_AGENT.TOPICS.FORM.UPDATE')"
             @click="handleSystemMessagesUpdate"
           />
         </div>
@@ -289,11 +284,11 @@ watch(
     </Accordion>
 
     <!-- Features Section -->
-    <Accordion :title="t('CAPTAIN.TOPICS.FORM.SECTIONS.FEATURES')">
+    <Accordion :title="t('AI_AGENT.TOPICS.FORM.SECTIONS.FEATURES')">
       <div class="flex flex-col gap-4 pt-4">
         <div class="flex flex-col gap-2">
           <label class="text-sm font-medium text-n-slate-12">
-            {{ t('CAPTAIN.TOPICS.FORM.FEATURES.TITLE') }}
+            {{ t('AI_AGENT.TOPICS.FORM.FEATURES.TITLE') }}
           </label>
           <div class="flex flex-col gap-2">
             <label class="flex items-center gap-2">
@@ -302,9 +297,7 @@ watch(
                 type="checkbox"
                 class="form-checkbox"
               />
-              {{
-                t('CAPTAIN.TOPICS.FORM.FEATURES.ALLOW_CONVERSATION_FAQS')
-              }}
+              {{ t('AI_AGENT.TOPICS.FORM.FEATURES.ALLOW_CONVERSATION_FAQS') }}
             </label>
             <label class="flex items-center gap-2">
               <input
@@ -312,7 +305,7 @@ watch(
                 type="checkbox"
                 class="form-checkbox"
               />
-              {{ t('CAPTAIN.TOPICS.FORM.FEATURES.ALLOW_MEMORIES') }}
+              {{ t('AI_AGENT.TOPICS.FORM.FEATURES.ALLOW_MEMORIES') }}
             </label>
           </div>
         </div>
@@ -321,7 +314,7 @@ watch(
           <Button
             size="small"
             :loading="isLoading"
-            :label="t('CAPTAIN.TOPICS.FORM.UPDATE')"
+            :label="t('AI_AGENT.TOPICS.FORM.UPDATE')"
             @click="handleFeaturesUpdate"
           />
         </div>

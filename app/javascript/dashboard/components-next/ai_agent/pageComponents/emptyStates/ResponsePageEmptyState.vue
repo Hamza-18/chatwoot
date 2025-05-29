@@ -1,9 +1,9 @@
 <script setup>
 import EmptyStateLayout from 'dashboard/components-next/EmptyStateLayout.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
-import ResponseCard from 'dashboard/components-next/captain/topic/ResponseCard.vue';
+import ResponseCard from 'dashboard/components-next/ai_agent/topic/ResponseCard.vue';
 import FeatureSpotlight from 'dashboard/components-next/feature-spotlight/FeatureSpotlight.vue';
-import { responsesList } from 'dashboard/components-next/captain/pageComponents/emptyStates/captainEmptyStateContent.js';
+import { responsesList } from 'dashboard/components-next/ai_agent/pageComponents/emptyStates/AiAgentEmptyStateContent.js';
 
 const emit = defineEmits(['click']);
 
@@ -14,16 +14,16 @@ const onClick = () => {
 
 <template>
   <FeatureSpotlight
-    :title="$t('CAPTAIN.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
-    :note="$t('CAPTAIN.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
-    fallback-thumbnail="/assets/images/dashboard/captain/faqs-light.svg"
-    fallback-thumbnail-dark="/assets/images/dashboard/captain/faqs-dark.svg"
-    learn-more-url="https://chwt.app/captain-faq"
+    :title="$t('AI_AGENT.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
+    :note="$t('AI_AGENT.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
+    fallback-thumbnail="/assets/images/dashboard/ai_agent/faqs-light.svg"
+    fallback-thumbnail-dark="/assets/images/dashboard/ai_agent/faqs-dark.svg"
+    learn-more-url="https://chwt.app/ai-agent-faq"
     class="mb-8"
   />
   <EmptyStateLayout
-    :title="$t('CAPTAIN.RESPONSES.EMPTY_STATE.TITLE')"
-    :subtitle="$t('CAPTAIN.RESPONSES.EMPTY_STATE.SUBTITLE')"
+    :title="$t('AI_AGENT.RESPONSES.EMPTY_STATE.TITLE')"
+    :subtitle="$t('AI_AGENT.RESPONSES.EMPTY_STATE.SUBTITLE')"
     :action-perms="['administrator']"
   >
     <template #empty-state-item>
@@ -43,7 +43,7 @@ const onClick = () => {
     </template>
     <template #actions>
       <Button
-        :label="$t('CAPTAIN.RESPONSES.ADD_NEW')"
+        :label="$t('AI_AGENT.RESPONSES.ADD_NEW')"
         icon="i-lucide-plus"
         @click="onClick"
       />

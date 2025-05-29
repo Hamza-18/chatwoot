@@ -1,11 +1,11 @@
 <script setup>
 import TopicCard from './TopicCard.vue';
-import { topicsList } from 'dashboard/components-next/captain/pageComponents/emptyStates/captainEmptyStateContent.js';
+import { topicsList } from 'dashboard/components-next/ai_agent/pageComponents/emptyStates/AiAgentEmptyStateContent.js';
 </script>
 
 <template>
   <Story
-    title="Captain/Topic/TopicCard"
+    title="AiAgent/Topic/TopicCard"
     :layout="{ type: 'grid', width: '700px' }"
   >
     <Variant title="Topic Card">

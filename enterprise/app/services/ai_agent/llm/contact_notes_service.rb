@@ -1,4 +1,4 @@
-class Captain::Llm::ContactNotesService < Llm::BaseOpenAiService
+class AiAgent::Llm::ContactNotesService < Llm::BaseOpenAiService
   def initialize(topic, conversation)
     super()
     @topic = topic
@@ -27,7 +27,7 @@ class Captain::Llm::ContactNotesService < Llm::BaseOpenAiService
 
   def chat_parameters
     account_language = @conversation.account.locale_english_name
-    prompt = Captain::Llm::SystemPromptsService.notes_generator(account_language)
+    prompt = AiAgent::Llm::SystemPromptsService.notes_generator(account_language)
 
     {
       model: @model,

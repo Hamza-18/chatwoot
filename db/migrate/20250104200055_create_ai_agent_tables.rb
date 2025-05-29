@@ -1,4 +1,4 @@
-class CreateCaptainTables < ActiveRecord::Migration[7.0]
+class CreateAiAgentTables < ActiveRecord::Migration[7.0]
   def up
     # Post this migration, the 'vector' extension is mandatory to run the application.
     # If the extension is not installed, the migration will raise an error.
@@ -10,9 +10,9 @@ class CreateCaptainTables < ActiveRecord::Migration[7.0]
   end
 
   def down
-    drop_table :captain_topic_responses if table_exists?(:captain_topic_responses)
-    drop_table :captain_documents if table_exists?(:captain_documents)
-    drop_table :captain_topics if table_exists?(:captain_topics)
+    drop_table :ai_agenttopic_responses if table_exists?(:ai_agenttopic_responses)
+    drop_table :ai_agentdocuments if table_exists?(:ai_agentdocuments)
+    drop_table :ai_agenttopics if table_exists?(:ai_agenttopics)
     drop_table :article_embeddings if table_exists?(:article_embeddings)
 
     # We are not disabling the extension here because it might be
@@ -32,7 +32,7 @@ class CreateCaptainTables < ActiveRecord::Migration[7.0]
   end
 
   def create_topics
-    create_table :captain_topics do |t|
+    create_table :ai_agenttopics do |t|
       t.string :name, null: false
       t.bigint :account_id, null: false
       t.string :description
@@ -40,12 +40,12 @@ class CreateCaptainTables < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :captain_topics, :account_id
-    add_index :captain_topics, [:account_id, :name], unique: true
+    add_index :ai_agenttopics, :account_id
+    add_index :ai_agenttopics, [:account_id, :name], unique: true
   end
 
   def create_documents
-    create_table :captain_documents do |t|
+    create_table :ai_agentdocuments do |t|
       t.string :name, null: false
       t.string :external_link, null: false
       t.text :content
@@ -55,13 +55,13 @@ class CreateCaptainTables < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :captain_documents, :account_id
-    add_index :captain_documents, :topic_id
-    add_index :captain_documents, [:topic_id, :external_link], unique: true
+    add_index :ai_agentdocuments, :account_id
+    add_index :ai_agentdocuments, :topic_id
+    add_index :ai_agentdocuments, [:topic_id, :external_link], unique: true
   end
 
   def create_topic_responses
-    create_table :captain_topic_responses do |t|
+    create_table :ai_agenttopic_responses do |t|
       t.string :question, null: false
       t.text :answer, null: false
       t.vector :embedding, limit: 1536
@@ -72,10 +72,10 @@ class CreateCaptainTables < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :captain_topic_responses, :account_id
-    add_index :captain_topic_responses, :topic_id
-    add_index :captain_topic_responses, :document_id
-    add_index :captain_topic_responses, :embedding, using: :ivfflat, name: 'vector_idx_knowledge_entries_embedding', opclass: :vector_l2_ops
+    add_index :ai_agenttopic_responses, :account_id
+    add_index :ai_agenttopic_responses, :topic_id
+    add_index :ai_agenttopic_responses, :document_id
+    add_index :ai_agenttopic_responses, :embedding, using: :ivfflat, name: 'vector_idx_knowledge_entries_embedding', opclass: :vector_l2_ops
   end
 
   def create_old_tables

@@ -1,8 +1,8 @@
-class Captain::InboxPendingConversationsResolutionJob < ApplicationJob
+class AiAgent::InboxPendingConversationsResolutionJob < ApplicationJob
   queue_as :low
 
   def perform(inbox)
-    Current.executed_by = inbox.captain_topic
+    Current.executed_by = inbox.ai_agenttopic
 
     resolvable_conversations = inbox.conversations.pending.where('last_activity_at < ? ', Time.now.utc - 1.hour).limit(Limits::BULK_ACTIONS_LIMIT)
     resolvable_conversations.each do |conversation|
@@ -17,14 +17,14 @@ class Captain::InboxPendingConversationsResolutionJob < ApplicationJob
 
   def create_outgoing_message(conversation, inbox)
     I18n.with_locale(inbox.account.locale) do
-      resolution_message = inbox.captain_topic.config['resolution_message']
+      resolution_message = inbox.ai_agenttopic.config['resolution_message']
       conversation.messages.create!(
         {
           message_type: :outgoing,
           account_id: conversation.account_id,
           inbox_id: conversation.inbox_id,
           content: resolution_message.presence || I18n.t('conversations.activity.auto_resolution_message'),
-          sender: inbox.captain_topic
+          sender: inbox.ai_agenttopic
         }
       )
     end

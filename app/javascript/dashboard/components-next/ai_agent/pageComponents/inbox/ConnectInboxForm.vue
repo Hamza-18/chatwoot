@@ -20,9 +20,9 @@ const emit = defineEmits(['submit', 'cancel']);
 const { t } = useI18n();
 
 const formState = {
-  uiFlags: useMapGetter('captainInboxes/getUIFlags'),
+  uiFlags: useMapGetter('aiAgentInboxes/getUIFlags'),
   inboxes: useMapGetter('inboxes/getInboxes'),
-  captainInboxes: useMapGetter('captainInboxes/getRecords'),
+  aiAgentInboxes: useMapGetter('aiAgentInboxes/getRecords'),
 };
 
 const initialState = {
@@ -36,10 +36,10 @@ const validationRules = {
 };
 
 const inboxList = computed(() => {
-  const captainInboxIds = formState.captainInboxes.value.map(inbox => inbox.id);
+  const aiAgentInboxIds = formState.aiAgentInboxes.value.map(inbox => inbox.id);
 
   return formState.inboxes.value
-    .filter(inbox => !captainInboxIds.includes(inbox.id))
+    .filter(inbox => !aiAgentInboxIds.includes(inbox.id))
     .map(inbox => ({
       value: inbox.id,
       label: inbox.name,
@@ -52,7 +52,7 @@ const isLoading = computed(() => formState.uiFlags.value.creatingItem);
 
 const getErrorMessage = (field, errorKey) => {
   return v$.value[field].$error
-    ? t(`CAPTAIN.INBOXES.FORM.${errorKey}.ERROR`)
+    ? t(`AI_AGENT.INBOXES.FORM.${errorKey}.ERROR`)
     : '';
 };
 
@@ -81,14 +81,14 @@ const handleSubmit = async () => {
   <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
     <div class="flex flex-col gap-1">
       <label for="inbox" class="mb-0.5 text-sm font-medium text-n-slate-12">
-        {{ t('CAPTAIN.INBOXES.FORM.INBOX.LABEL') }}
+        {{ t('AI_AGENT.INBOXES.FORM.INBOX.LABEL') }}
       </label>
       <ComboBox
         id="inbox"
         v-model="state.inboxId"
         :options="inboxList"
         :has-error="!!formErrors.inboxId"
-        :placeholder="t('CAPTAIN.INBOXES.FORM.INBOX.PLACEHOLDER')"
+        :placeholder="t('AI_AGENT.INBOXES.FORM.INBOX.PLACEHOLDER')"
         class="[&>div>button]:bg-n-alpha-black2 [&>div>button:not(.focused)]:dark:outline-n-weak [&>div>button:not(.focused)]:hover:!outline-n-slate-6"
         :message="formErrors.inboxId"
       />
@@ -99,13 +99,13 @@ const handleSubmit = async () => {
         type="button"
         variant="faded"
         color="slate"
-        :label="t('CAPTAIN.FORM.CANCEL')"
+        :label="t('AI_AGENT.FORM.CANCEL')"
         class="w-full bg-n-alpha-2 n-blue-text hover:bg-n-alpha-3"
         @click="handleCancel"
       />
       <Button
         type="submit"
-        :label="t('CAPTAIN.FORM.CREATE')"
+        :label="t('AI_AGENT.FORM.CREATE')"
         class="w-full"
         :is-loading="isLoading"
         :disabled="isLoading"

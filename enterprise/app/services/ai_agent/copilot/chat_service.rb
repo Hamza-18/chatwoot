@@ -1,7 +1,7 @@
 require 'openai'
 
-class Captain::Copilot::ChatService < Llm::BaseOpenAiService
-  include Captain::ChatHelper
+class AiAgent::Copilot::ChatService < Llm::BaseOpenAiService
+  include AiAgent::ChatHelper
 
   attr_reader :topic, :account, :user, :copilot_thread, :previous_history, :messages
 
@@ -60,21 +60,21 @@ class Captain::Copilot::ChatService < Llm::BaseOpenAiService
   end
 
   def register_tools
-    @tool_registry = Captain::ToolRegistryService.new(@topic, user: @user)
-    @tool_registry.register_tool(Captain::Tools::SearchDocumentationService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::GetArticleService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::GetContactService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::GetConversationService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::SearchArticlesService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::SearchContactsService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::SearchConversationsService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::SearchLinearIssuesService)
+    @tool_registry = AiAgent::ToolRegistryService.new(@topic, user: @user)
+    @tool_registry.register_tool(AiAgent::Tools::SearchDocumentationService)
+    @tool_registry.register_tool(AiAgent::Tools::Copilot::GetArticleService)
+    @tool_registry.register_tool(AiAgent::Tools::Copilot::GetContactService)
+    @tool_registry.register_tool(AiAgent::Tools::Copilot::GetConversationService)
+    @tool_registry.register_tool(AiAgent::Tools::Copilot::SearchArticlesService)
+    @tool_registry.register_tool(AiAgent::Tools::Copilot::SearchContactsService)
+    @tool_registry.register_tool(AiAgent::Tools::Copilot::SearchConversationsService)
+    @tool_registry.register_tool(AiAgent::Tools::Copilot::SearchLinearIssuesService)
   end
 
   def system_message
     {
       role: 'system',
-      content: Captain::Llm::SystemPromptsService.copilot_response_generator(@topic.config['product_name'])
+      content: AiAgent::Llm::SystemPromptsService.copilot_response_generator(@topic.config['product_name'])
     }
   end
 

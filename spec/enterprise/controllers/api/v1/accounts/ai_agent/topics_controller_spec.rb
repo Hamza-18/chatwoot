@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
+RSpec.describe 'Api::V1::Accounts::AiAgent::Topics', type: :request do
   let(:account) { create(:account) }
   let(:admin) { create(:user, account: account, role: :administrator) }
   let(:agent) { create(:user, account: account, role: :agent) }
@@ -9,10 +9,10 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  describe 'GET /api/v1/accounts/{account.id}/captain/topics' do
+  describe 'GET /api/v1/accounts/{account.id}/ai_agent/topics' do
     context 'when it is an un-authenticated user' do
       it 'does not fetch topics' do
-        get "/api/v1/accounts/#{account.id}/captain/topics",
+        get "/api/v1/accounts/#{account.id}/ai_agent/topics",
             as: :json
         expect(response).to have_http_status(:unauthorized)
       end
@@ -20,8 +20,8 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
 
     context 'when it is an agent' do
       it 'fetches topics for the account' do
-        create_list(:captain_topic, 3, account: account)
-        get "/api/v1/accounts/#{account.id}/captain/topics",
+        create_list(:ai_agenttopic, 3, account: account)
+        get "/api/v1/accounts/#{account.id}/ai_agent/topics",
             headers: agent.create_new_auth_token,
             as: :json
 
@@ -34,12 +34,12 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
     end
   end
 
-  describe 'GET /api/v1/accounts/{account.id}/captain/topics/{id}' do
-    let(:topic) { create(:captain_topic, account: account) }
+  describe 'GET /api/v1/accounts/{account.id}/ai_agent/topics/{id}' do
+    let(:topic) { create(:ai_agenttopic, account: account) }
 
     context 'when it is an un-authenticated user' do
       it 'does not fetch the topic' do
-        get "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}",
+        get "/api/v1/accounts/#{account.id}/ai_agent/topics/#{topic.id}",
             as: :json
         expect(response).to have_http_status(:unauthorized)
       end
@@ -47,7 +47,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
 
     context 'when it is an agent' do
       it 'fetches the topic' do
-        get "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}",
+        get "/api/v1/accounts/#{account.id}/ai_agent/topics/#{topic.id}",
             headers: agent.create_new_auth_token,
             as: :json
 
@@ -57,7 +57,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
     end
   end
 
-  describe 'POST /api/v1/accounts/{account.id}/captain/topics' do
+  describe 'POST /api/v1/accounts/{account.id}/ai_agent/topics' do
     let(:valid_attributes) do
       {
         topic: {
@@ -69,7 +69,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
 
     context 'when it is an un-authenticated user' do
       it 'does not create an topic' do
-        post "/api/v1/accounts/#{account.id}/captain/topics",
+        post "/api/v1/accounts/#{account.id}/ai_agent/topics",
              params: valid_attributes,
              as: :json
         expect(response).to have_http_status(:unauthorized)
@@ -78,7 +78,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
 
     context 'when it is an agent' do
       it 'does not create an topic' do
-        post "/api/v1/accounts/#{account.id}/captain/topics",
+        post "/api/v1/accounts/#{account.id}/ai_agent/topics",
              params: valid_attributes,
              headers: agent.create_new_auth_token,
              as: :json
@@ -89,11 +89,11 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
     context 'when it is an admin' do
       it 'creates a new topic' do
         expect do
-          post "/api/v1/accounts/#{account.id}/captain/topics",
+          post "/api/v1/accounts/#{account.id}/ai_agent/topics",
                params: valid_attributes,
                headers: admin.create_new_auth_token,
                as: :json
-        end.to change(Captain::Topic, :count).by(1)
+        end.to change(AiAgent::Topic, :count).by(1)
 
         expect(json_response[:name]).to eq('New Topic')
         expect(response).to have_http_status(:success)
@@ -101,8 +101,8 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
     end
   end
 
-  describe 'PATCH /api/v1/accounts/{account.id}/captain/topics/{id}' do
-    let(:topic) { create(:captain_topic, account: account) }
+  describe 'PATCH /api/v1/accounts/{account.id}/ai_agent/topics/{id}' do
+    let(:topic) { create(:ai_agenttopic, account: account) }
     let(:update_attributes) do
       {
         topic: {
@@ -113,7 +113,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
 
     context 'when it is an un-authenticated user' do
       it 'does not update the topic' do
-        patch "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}",
+        patch "/api/v1/accounts/#{account.id}/ai_agent/topics/#{topic.id}",
               params: update_attributes,
               as: :json
         expect(response).to have_http_status(:unauthorized)
@@ -122,7 +122,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
 
     context 'when it is an agent' do
       it 'does not update the topic' do
-        patch "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}",
+        patch "/api/v1/accounts/#{account.id}/ai_agent/topics/#{topic.id}",
               params: update_attributes,
               headers: agent.create_new_auth_token,
               as: :json
@@ -132,7 +132,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
 
     context 'when it is an admin' do
       it 'updates the topic' do
-        patch "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}",
+        patch "/api/v1/accounts/#{account.id}/ai_agent/topics/#{topic.id}",
               params: update_attributes,
               headers: admin.create_new_auth_token,
               as: :json
@@ -143,12 +143,12 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
     end
   end
 
-  describe 'DELETE /api/v1/accounts/{account.id}/captain/topics/{id}' do
-    let!(:topic) { create(:captain_topic, account: account) }
+  describe 'DELETE /api/v1/accounts/{account.id}/ai_agent/topics/{id}' do
+    let!(:topic) { create(:ai_agenttopic, account: account) }
 
     context 'when it is an un-authenticated user' do
       it 'does not delete the topic' do
-        delete "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}",
+        delete "/api/v1/accounts/#{account.id}/ai_agent/topics/#{topic.id}",
                as: :json
         expect(response).to have_http_status(:unauthorized)
       end
@@ -156,7 +156,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
 
     context 'when it is an agent' do
       it 'delete the topic' do
-        delete "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}",
+        delete "/api/v1/accounts/#{account.id}/ai_agent/topics/#{topic.id}",
                headers: agent.create_new_auth_token,
                as: :json
         expect(response).to have_http_status(:unauthorized)
@@ -166,18 +166,18 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
     context 'when it is an admin' do
       it 'deletes the topic' do
         expect do
-          delete "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}",
+          delete "/api/v1/accounts/#{account.id}/ai_agent/topics/#{topic.id}",
                  headers: admin.create_new_auth_token,
                  as: :json
-        end.to change(Captain::Topic, :count).by(-1)
+        end.to change(AiAgent::Topic, :count).by(-1)
 
         expect(response).to have_http_status(:no_content)
       end
     end
   end
 
-  describe 'POST /api/v1/accounts/{account.id}/captain/topics/{id}/playground' do
-    let(:topic) { create(:captain_topic, account: account) }
+  describe 'POST /api/v1/accounts/{account.id}/ai_agent/topics/{id}/playground' do
+    let(:topic) { create(:ai_agenttopic, account: account) }
     let(:valid_params) do
       {
         message_content: 'Hello topic',
@@ -190,7 +190,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
 
     context 'when it is an un-authenticated user' do
       it 'returns unauthorized' do
-        post "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}/playground",
+        post "/api/v1/accounts/#{account.id}/ai_agent/topics/#{topic.id}/playground",
              params: valid_params,
              as: :json
 
@@ -200,11 +200,11 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
 
     context 'when it is an agent' do
       it 'generates a response' do
-        chat_service = instance_double(Captain::Llm::TopicChatService)
-        allow(Captain::Llm::TopicChatService).to receive(:new).with(topic: topic).and_return(chat_service)
+        chat_service = instance_double(AiAgent::Llm::TopicChatService)
+        allow(AiAgent::Llm::TopicChatService).to receive(:new).with(topic: topic).and_return(chat_service)
         allow(chat_service).to receive(:generate_response).and_return({ content: 'Topic response' })
 
-        post "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}/playground",
+        post "/api/v1/accounts/#{account.id}/ai_agent/topics/#{topic.id}/playground",
              params: valid_params,
              headers: agent.create_new_auth_token,
              as: :json
@@ -221,11 +221,11 @@ RSpec.describe 'Api::V1::Accounts::Captain::Topics', type: :request do
     context 'when message_history is not provided' do
       it 'uses empty array as default' do
         params_without_history = { message_content: 'Hello topic' }
-        chat_service = instance_double(Captain::Llm::TopicChatService)
-        allow(Captain::Llm::TopicChatService).to receive(:new).with(topic: topic).and_return(chat_service)
+        chat_service = instance_double(AiAgent::Llm::TopicChatService)
+        allow(AiAgent::Llm::TopicChatService).to receive(:new).with(topic: topic).and_return(chat_service)
         allow(chat_service).to receive(:generate_response).and_return({ content: 'Topic response' })
 
-        post "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}/playground",
+        post "/api/v1/accounts/#{account.id}/ai_agent/topics/#{topic.id}/playground",
              params: params_without_history,
              headers: agent.create_new_auth_token,
              as: :json

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # Test tool implementation
-class TestTool < Captain::Tools::BaseService
+class TestTool < AiAgent::Tools::BaseService
   attr_accessor :tool_active
 
   def initialize(topic, user: nil)
@@ -37,8 +37,8 @@ class TestTool < Captain::Tools::BaseService
   end
 end
 
-RSpec.describe Captain::ToolRegistryService do
-  let(:topic) { create(:captain_topic) }
+RSpec.describe AiAgent::ToolRegistryService do
+  let(:topic) { create(:ai_agenttopic) }
   let(:service) { described_class.new(topic) }
 
   describe '#initialize' do

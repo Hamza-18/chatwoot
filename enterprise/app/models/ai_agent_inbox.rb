@@ -1,21 +1,21 @@
 # == Schema Information
 #
-# Table name: captain_inboxes
+# Table name: ai_agentinboxes
 #
 #  id                   :bigint           not null, primary key
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  captain_topic_id :bigint           not null
+#  ai_agenttopic_id :bigint           not null
 #  inbox_id             :bigint           not null
 #
 # Indexes
 #
-#  index_captain_inboxes_on_captain_topic_id               (captain_topic_id)
-#  index_captain_inboxes_on_captain_topic_id_and_inbox_id  (captain_topic_id,inbox_id) UNIQUE
-#  index_captain_inboxes_on_inbox_id                           (inbox_id)
+#  index_ai_agentinboxes_on_ai_agenttopic_id               (ai_agenttopic_id)
+#  index_ai_agentinboxes_on_ai_agenttopic_id_and_inbox_id  (ai_agenttopic_id,inbox_id) UNIQUE
+#  index_ai_agentinboxes_on_inbox_id                           (inbox_id)
 #
-class CaptainInbox < ApplicationRecord
-  belongs_to :captain_topic, class_name: 'Captain::Topic'
+class AiAgentInbox < ApplicationRecord
+  belongs_to :ai_agenttopic, class_name: 'AiAgent::Topic'
   belongs_to :inbox
 
   validates :inbox_id, uniqueness: true

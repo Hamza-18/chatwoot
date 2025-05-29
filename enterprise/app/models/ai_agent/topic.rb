@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: captain_topics
+# Table name: ai_agenttopics
 #
 #  id          :bigint           not null, primary key
 #  config      :jsonb            not null
@@ -12,22 +12,22 @@
 #
 # Indexes
 #
-#  index_captain_topics_on_account_id  (account_id)
+#  index_ai_agenttopics_on_account_id  (account_id)
 #
-class Captain::Topic < ApplicationRecord
+class AiAgent::Topic < ApplicationRecord
   include Avatarable
 
-  self.table_name = 'captain_topics'
+  self.table_name = 'ai_agenttopics'
 
   belongs_to :account
-  has_many :documents, class_name: 'Captain::Document', dependent: :destroy_async
-  has_many :responses, class_name: 'Captain::TopicResponse', dependent: :destroy_async
-  has_many :captain_inboxes,
-           class_name: 'CaptainInbox',
-           foreign_key: :captain_topic_id,
+  has_many :documents, class_name: 'AiAgent::Document', dependent: :destroy_async
+  has_many :responses, class_name: 'AiAgent::TopicResponse', dependent: :destroy_async
+  has_many :ai_agentinboxes,
+           class_name: 'AiAgentInbox',
+           foreign_key: :ai_agenttopic_id,
            dependent: :destroy_async
   has_many :inboxes,
-           through: :captain_inboxes
+           through: :ai_agentinboxes
   has_many :messages, as: :sender, dependent: :nullify
   has_many :copilot_threads, dependent: :destroy_async
 
@@ -50,7 +50,7 @@ class Captain::Topic < ApplicationRecord
       avatar_url: avatar_url.presence || default_avatar_url,
       description: description,
       created_at: created_at,
-      type: 'captain_topic'
+      type: 'ai_agenttopic'
     }
   end
 
@@ -61,13 +61,13 @@ class Captain::Topic < ApplicationRecord
       avatar_url: avatar_url.presence || default_avatar_url,
       description: description,
       created_at: created_at,
-      type: 'captain_topic'
+      type: 'ai_agenttopic'
     }
   end
 
   private
 
   def default_avatar_url
-    "#{ENV.fetch('FRONTEND_URL', nil)}/assets/images/dashboard/captain/logo.svg"
+    "#{ENV.fetch('FRONTEND_URL', nil)}/assets/images/dashboard/ai_agent/logo.svg"
   end
 end

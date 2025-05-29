@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Captain::Tools::Copilot::GetConversationService do
+RSpec.describe AiAgent::Tools::Copilot::GetConversationService do
   let(:account) { create(:account) }
   let(:user) { create(:user, account: account) }
-  let(:topic) { create(:captain_topic, account: account) }
+  let(:topic) { create(:ai_agenttopic, account: account) }
   let(:service) { described_class.new(topic, user: user) }
 
   describe '#name' do
@@ -38,7 +38,7 @@ RSpec.describe Captain::Tools::Copilot::GetConversationService do
   describe '#active?' do
     context 'when user is an admin' do
       let(:user) { create(:user, :administrator, account: account) }
-      let(:topic) { create(:captain_topic, account: account) }
+      let(:topic) { create(:ai_agenttopic, account: account) }
 
       it 'returns true' do
         expect(service.active?).to be true
@@ -47,7 +47,7 @@ RSpec.describe Captain::Tools::Copilot::GetConversationService do
 
     context 'when user has custom role with conversation_manage permission' do
       let(:user) { create(:user, account: account) }
-      let(:topic) { create(:captain_topic, account: account) }
+      let(:topic) { create(:ai_agenttopic, account: account) }
       let(:custom_role) { create(:custom_role, account: account, permissions: ['conversation_manage']) }
 
       before do
@@ -62,7 +62,7 @@ RSpec.describe Captain::Tools::Copilot::GetConversationService do
 
     context 'when user has custom role with conversation_unassigned_manage permission' do
       let(:user) { create(:user, account: account) }
-      let(:topic) { create(:captain_topic, account: account) }
+      let(:topic) { create(:ai_agenttopic, account: account) }
       let(:custom_role) { create(:custom_role, account: account, permissions: ['conversation_unassigned_manage']) }
 
       before do
@@ -77,7 +77,7 @@ RSpec.describe Captain::Tools::Copilot::GetConversationService do
 
     context 'when user has custom role with conversation_participating_manage permission' do
       let(:user) { create(:user, account: account) }
-      let(:topic) { create(:captain_topic, account: account) }
+      let(:topic) { create(:ai_agenttopic, account: account) }
       let(:custom_role) { create(:custom_role, account: account, permissions: ['conversation_participating_manage']) }
 
       before do
@@ -92,7 +92,7 @@ RSpec.describe Captain::Tools::Copilot::GetConversationService do
 
     context 'when user has custom role without any conversation permissions' do
       let(:user) { create(:user, account: account) }
-      let(:topic) { create(:captain_topic, account: account) }
+      let(:topic) { create(:ai_agenttopic, account: account) }
       let(:custom_role) { create(:custom_role, account: account, permissions: []) }
 
       before do

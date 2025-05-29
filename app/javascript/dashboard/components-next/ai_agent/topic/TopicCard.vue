@@ -38,7 +38,7 @@ const [showActionsDropdown, toggleDropdown] = useToggle();
 const menuItems = computed(() => {
   const allOptions = [
     {
-      label: t('CAPTAIN.TOPICS.OPTIONS.VIEW_CONNECTED_INBOXES'),
+      label: t('AI_AGENT.TOPICS.OPTIONS.VIEW_CONNECTED_INBOXES'),
       value: 'viewConnectedInboxes',
       action: 'viewConnectedInboxes',
       icon: 'i-lucide-link',
@@ -48,13 +48,13 @@ const menuItems = computed(() => {
   if (checkPermissions(['administrator'])) {
     allOptions.push(
       {
-        label: t('CAPTAIN.TOPICS.OPTIONS.EDIT_TOPIC'),
+        label: t('AI_AGENT.TOPICS.OPTIONS.EDIT_TOPIC'),
         value: 'edit',
         action: 'edit',
         icon: 'i-lucide-pencil-line',
       },
       {
-        label: t('CAPTAIN.TOPICS.OPTIONS.DELETE_TOPIC'),
+        label: t('AI_AGENT.TOPICS.OPTIONS.DELETE_TOPIC'),
         value: 'delete',
         action: 'delete',
         icon: 'i-lucide-trash',
@@ -77,7 +77,7 @@ const handleAction = ({ action, value }) => {
   <CardLayout>
     <div class="flex justify-between w-full gap-1">
       <router-link
-        :to="{ name: 'captain_topics_edit', params: { topicId: id } }"
+        :to="{ name: 'ai_agenttopics_edit', params: { topicId: id } }"
         class="text-base text-n-slate-12 line-clamp-1 hover:underline transition-colors"
       >
         {{ name }}

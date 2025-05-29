@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import MessageList from './MessageList.vue';
-import CaptainTopic from 'dashboard/api/captain/topic';
+import AiAgentTopic from 'dashboard/api/ai_agent/topic';
 
 const { topicId } = defineProps({
   topicId: {
@@ -43,7 +43,7 @@ const sendMessage = async () => {
 
   try {
     isLoading.value = true;
-    const { data } = await CaptainTopic.playground({
+    const { data } = await AiAgentTopic.playground({
       topicId,
       messageContent: currentMessage,
       messageHistory: formatMessagesForApi(),
@@ -70,7 +70,7 @@ const sendMessage = async () => {
     <div class="mb-4">
       <div class="flex justify-between items-center mb-1">
         <h3 class="text-lg font-medium">
-          {{ t('CAPTAIN.PLAYGROUND.HEADER') }}
+          {{ t('AI_AGENT.PLAYGROUND.HEADER') }}
         </h3>
         <NextButton
           ghost
@@ -80,7 +80,7 @@ const sendMessage = async () => {
         />
       </div>
       <p class="text-sm text-n-slate-11">
-        {{ t('CAPTAIN.PLAYGROUND.DESCRIPTION') }}
+        {{ t('AI_AGENT.PLAYGROUND.DESCRIPTION') }}
       </p>
     </div>
 
@@ -92,7 +92,7 @@ const sendMessage = async () => {
       <input
         v-model="newMessage"
         class="flex-1 bg-transparent border-none focus:outline-none text-sm mb-0"
-        :placeholder="t('CAPTAIN.PLAYGROUND.MESSAGE_PLACEHOLDER')"
+        :placeholder="t('AI_AGENT.PLAYGROUND.MESSAGE_PLACEHOLDER')"
         @keyup.enter="sendMessage"
       />
       <NextButton
@@ -105,7 +105,7 @@ const sendMessage = async () => {
     </div>
 
     <p class="text-xs text-n-slate-11 pt-2 text-center">
-      {{ t('CAPTAIN.PLAYGROUND.CREDIT_NOTE') }}
+      {{ t('AI_AGENT.PLAYGROUND.CREDIT_NOTE') }}
     </p>
   </div>
 </template>

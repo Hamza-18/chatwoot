@@ -1,6 +1,6 @@
-class Api::V1::Accounts::Captain::TopicsController < Api::V1::Accounts::BaseController
+class Api::V1::Accounts::AiAgent::TopicsController < Api::V1::Accounts::BaseController
   before_action :current_account
-  before_action -> { check_authorization(Captain::Topic) }
+  before_action -> { check_authorization(AiAgent::Topic) }
 
   before_action :set_topic, only: [:show, :update, :destroy, :playground]
 
@@ -24,7 +24,7 @@ class Api::V1::Accounts::Captain::TopicsController < Api::V1::Accounts::BaseCont
   end
 
   def playground
-    response = Captain::Llm::TopicChatService.new(topic: @topic).generate_response(
+    response = AiAgent::Llm::TopicChatService.new(topic: @topic).generate_response(
       params[:message_content],
       message_history
     )
@@ -39,7 +39,7 @@ class Api::V1::Accounts::Captain::TopicsController < Api::V1::Accounts::BaseCont
   end
 
   def account_topics
-    @account_topics ||= Captain::Topic.for_account(Current.account.id)
+    @account_topics ||= AiAgent::Topic.for_account(Current.account.id)
   end
 
   def topic_params

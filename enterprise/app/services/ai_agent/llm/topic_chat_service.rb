@@ -1,7 +1,7 @@
 require 'openai'
 
-class Captain::Llm::TopicChatService < Llm::BaseOpenAiService
-  include Captain::ChatHelper
+class AiAgent::Llm::TopicChatService < Llm::BaseOpenAiService
+  include AiAgent::ChatHelper
 
   def initialize(topic: nil)
     super()
@@ -21,14 +21,14 @@ class Captain::Llm::TopicChatService < Llm::BaseOpenAiService
   private
 
   def register_tools
-    @tool_registry = Captain::ToolRegistryService.new(@topic, user: nil)
-    @tool_registry.register_tool(Captain::Tools::SearchDocumentationService)
+    @tool_registry = AiAgent::ToolRegistryService.new(@topic, user: nil)
+    @tool_registry.register_tool(AiAgent::Tools::SearchDocumentationService)
   end
 
   def system_message
     {
       role: 'system',
-      content: Captain::Llm::SystemPromptsService.topic_response_generator(@topic.name, @topic.config['product_name'], @topic.config)
+      content: AiAgent::Llm::SystemPromptsService.topic_response_generator(@topic.name, @topic.config['product_name'], @topic.config)
     }
   end
 

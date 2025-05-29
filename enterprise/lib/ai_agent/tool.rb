@@ -1,4 +1,4 @@
-class Captain::Tool
+class AiAgent::Tool
   class InvalidImplementationError < StandardError; end
   class InvalidSecretsError < StandardError; end
   class ExecutionError < StandardError; end

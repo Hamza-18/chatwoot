@@ -1,1 +1,1 @@
-json.partial! 'api/v1/models/captain/document', formats: [:json], resource: @document
+json.partial! 'api/v1/models/ai_agent/document', formats: [:json], resource: @document

@@ -1,8 +1,8 @@
-class Captain::Tools::FirecrawlParserJob < ApplicationJob
+class AiAgent::Tools::FirecrawlParserJob < ApplicationJob
   queue_as :low
 
   def perform(topic_id:, payload:)
-    topic = Captain::Topic.find(topic_id)
+    topic = AiAgent::Topic.find(topic_id)
     metadata = payload[:metadata]
 
     document = topic.documents.find_or_initialize_by(

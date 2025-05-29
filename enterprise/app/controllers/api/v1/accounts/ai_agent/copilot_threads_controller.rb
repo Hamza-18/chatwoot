@@ -1,4 +1,4 @@
-class Api::V1::Accounts::Captain::CopilotThreadsController < Api::V1::Accounts::BaseController
+class Api::V1::Accounts::AiAgent::CopilotThreadsController < Api::V1::Accounts::BaseController
   before_action :ensure_message, only: :create
 
   def index
@@ -29,7 +29,7 @@ class Api::V1::Accounts::Captain::CopilotThreadsController < Api::V1::Accounts::
   end
 
   def topic
-    Current.account.captain_topics.find(copilot_thread_params[:topic_id])
+    Current.account.ai_agenttopics.find(copilot_thread_params[:topic_id])
   end
 
   def copilot_thread_params

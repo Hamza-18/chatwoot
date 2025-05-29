@@ -31,7 +31,7 @@ const openBilling = () => {
   >
     <BasePaywallModal
       class="mx-auto"
-      feature-prefix="CAPTAIN"
+      feature-prefix="AI_AGENT"
       :i18n-key="i18nKey"
       :is-super-admin="isSuperAdmin"
       :is-on-chatwoot-cloud="isOnChatwootCloud"

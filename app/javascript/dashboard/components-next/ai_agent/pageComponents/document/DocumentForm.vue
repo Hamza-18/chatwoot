@@ -14,8 +14,8 @@ const emit = defineEmits(['submit', 'cancel']);
 const { t } = useI18n();
 
 const formState = {
-  uiFlags: useMapGetter('captainDocuments/getUIFlags'),
-  topics: useMapGetter('captainTopics/getRecords'),
+  uiFlags: useMapGetter('aiAgentDocuments/getUIFlags'),
+  topics: useMapGetter('aiAgentTopics/getRecords'),
 };
 
 const initialState = {
@@ -43,7 +43,7 @@ const isLoading = computed(() => formState.uiFlags.value.creatingItem);
 
 const getErrorMessage = (field, errorKey) => {
   return v$.value[field].$error
-    ? t(`CAPTAIN.DOCUMENTS.FORM.${errorKey}.ERROR`)
+    ? t(`AI_AGENT.DOCUMENTS.FORM.${errorKey}.ERROR`)
     : '';
 };
 
@@ -73,21 +73,21 @@ const handleSubmit = async () => {
   <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
     <Input
       v-model="state.url"
-      :label="t('CAPTAIN.DOCUMENTS.FORM.URL.LABEL')"
-      :placeholder="t('CAPTAIN.DOCUMENTS.FORM.URL.PLACEHOLDER')"
+      :label="t('AI_AGENT.DOCUMENTS.FORM.URL.LABEL')"
+      :placeholder="t('AI_AGENT.DOCUMENTS.FORM.URL.PLACEHOLDER')"
       :message="formErrors.url"
       :message-type="formErrors.url ? 'error' : 'info'"
     />
     <div class="flex flex-col gap-1">
       <label for="topic" class="mb-0.5 text-sm font-medium text-n-slate-12">
-        {{ t('CAPTAIN.DOCUMENTS.FORM.TOPIC.LABEL') }}
+        {{ t('AI_AGENT.DOCUMENTS.FORM.TOPIC.LABEL') }}
       </label>
       <ComboBox
         id="topic"
         v-model="state.topicId"
         :options="topicList"
         :has-error="!!formErrors.topicId"
-        :placeholder="t('CAPTAIN.DOCUMENTS.FORM.TOPIC.PLACEHOLDER')"
+        :placeholder="t('AI_AGENT.DOCUMENTS.FORM.TOPIC.PLACEHOLDER')"
         class="[&>div>button]:bg-n-alpha-black2 [&>div>button:not(.focused)]:dark:outline-n-weak [&>div>button:not(.focused)]:hover:!outline-n-slate-6"
         :message="formErrors.topicId"
       />
@@ -98,13 +98,13 @@ const handleSubmit = async () => {
         type="button"
         variant="faded"
         color="slate"
-        :label="t('CAPTAIN.FORM.CANCEL')"
+        :label="t('AI_AGENT.FORM.CANCEL')"
         class="w-full bg-n-alpha-2 n-blue-text hover:bg-n-alpha-3"
         @click="handleCancel"
       />
       <Button
         type="submit"
-        :label="t('CAPTAIN.FORM.CREATE')"
+        :label="t('AI_AGENT.FORM.CREATE')"
         class="w-full"
         :is-loading="isLoading"
         :disabled="isLoading"

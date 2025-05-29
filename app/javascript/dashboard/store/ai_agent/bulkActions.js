@@ -1,10 +1,10 @@
-import CaptainBulkActionsAPI from 'dashboard/api/captain/bulkActions';
+import AiAgentBulkActionsAPI from 'dashboard/api/ai_agent/bulkActions';
 import { createStore } from './storeFactory';
 import { throwErrorMessage } from 'dashboard/store/utils/api';
 
 export default createStore({
-  name: 'CaptainBulkAction',
-  API: CaptainBulkActionsAPI,
+  name: 'AiAgentBulkAction',
+  API: AiAgentBulkActionsAPI,
   actions: mutations => ({
     processBulkAction: async function processBulkAction(
       { commit },
@@ -12,7 +12,7 @@ export default createStore({
     ) {
       commit(mutations.SET_UI_FLAG, { isUpdating: true });
       try {
-        const response = await CaptainBulkActionsAPI.create({
+        const response = await AiAgentBulkActionsAPI.create({
           type: type,
           ids,
           fields: { status: actionType },
@@ -33,7 +33,7 @@ export default createStore({
       });
 
       // Update the response store after successful API call
-      await dispatch('captainResponses/removeBulkResponses', ids, {
+      await dispatch('aiAgentResponses/removeBulkResponses', ids, {
         root: true,
       });
       return response;
@@ -47,7 +47,7 @@ export default createStore({
       });
 
       // Update response store after successful API call
-      await dispatch('captainResponses/updateBulkResponses', response, {
+      await dispatch('aiAgentResponses/updateBulkResponses', response, {
         root: true,
       });
       return response;

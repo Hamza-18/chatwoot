@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe Captain::Llm::ConversationFaqService do
-  let(:captain_topic) { create(:captain_topic) }
+RSpec.describe AiAgent::Llm::ConversationFaqService do
+  let(:ai_agenttopic) { create(:ai_agenttopic) }
   let(:conversation) { create(:conversation, first_reply_created_at: Time.zone.now) }
-  let(:service) { described_class.new(captain_topic, conversation) }
+  let(:service) { described_class.new(ai_agenttopic, conversation) }
   let(:client) { instance_double(OpenAI::Client) }
-  let(:embedding_service) { instance_double(Captain::Llm::EmbeddingService) }
+  let(:embedding_service) { instance_double(AiAgent::Llm::EmbeddingService) }
 
   before do
-    create(:installation_config) { create(:installation_config, name: 'CAPTAIN_OPEN_AI_API_KEY', value: 'test-key') }
+    create(:installation_config) { create(:installation_config, name: 'AI_AGENT_OPEN_AI_API_KEY', value: 'test-key') }
     allow(OpenAI::Client).to receive(:new).and_return(client)
-    allow(Captain::Llm::EmbeddingService).to receive(:new).and_return(embedding_service)
+    allow(AiAgent::Llm::EmbeddingService).to receive(:new).and_return(embedding_service)
   end
 
   describe '#generate_and_deduplicate' do
@@ -37,19 +37,19 @@ RSpec.describe Captain::Llm::ConversationFaqService do
       before do
         allow(client).to receive(:chat).and_return(openai_response)
         allow(embedding_service).to receive(:get_embedding).and_return([0.1, 0.2, 0.3])
-        allow(captain_topic.responses).to receive(:nearest_neighbors).and_return([])
+        allow(ai_agenttopic.responses).to receive(:nearest_neighbors).and_return([])
       end
 
       it 'creates new FAQs' do
         expect do
           service.generate_and_deduplicate
-        end.to change(captain_topic.responses, :count).by(2)
+        end.to change(ai_agenttopic.responses, :count).by(2)
       end
 
       it 'saves the correct FAQ content' do
         service.generate_and_deduplicate
         expect(
-          captain_topic.responses.pluck(:question, :answer, :status, :documentable_id)
+          ai_agenttopic.responses.pluck(:question, :answer, :status, :documentable_id)
         ).to contain_exactly(
           ['What is the purpose?', 'To help users.', 'pending', conversation.id],
           ['How does it work?', 'Through AI.', 'pending', conversation.id]
@@ -67,10 +67,10 @@ RSpec.describe Captain::Llm::ConversationFaqService do
 
     context 'when finding duplicates' do
       let(:existing_response) do
-        create(:captain_topic_response, topic: captain_topic, question: 'Similar question', answer: 'Similar answer')
+        create(:ai_agenttopic_response, topic: ai_agenttopic, question: 'Similar question', answer: 'Similar answer')
       end
       let(:similar_neighbor) do
-        # Using OpenStruct here to mock as the Captain:TopicResponse does not implement
+        # Using OpenStruct here to mock as the AiAgent:TopicResponse does not implement
         # neighbor_distance as a method or attribute rather it is returned directly
         # from SQL query in neighbor gem
         OpenStruct.new(
@@ -84,13 +84,13 @@ RSpec.describe Captain::Llm::ConversationFaqService do
       before do
         allow(client).to receive(:chat).and_return(openai_response)
         allow(embedding_service).to receive(:get_embedding).and_return([0.1, 0.2, 0.3])
-        allow(captain_topic.responses).to receive(:nearest_neighbors).and_return([similar_neighbor])
+        allow(ai_agenttopic.responses).to receive(:nearest_neighbors).and_return([similar_neighbor])
       end
 
       it 'filters out duplicate FAQs' do
         expect do
           service.generate_and_deduplicate
-        end.not_to change(captain_topic.responses, :count)
+        end.not_to change(ai_agenttopic.responses, :count)
       end
     end
 
@@ -137,7 +137,7 @@ RSpec.describe Captain::Llm::ConversationFaqService do
     end
 
     it 'includes system prompt and conversation content' do
-      allow(Captain::Llm::SystemPromptsService).to receive(:conversation_faq_generator).and_return('system prompt')
+      allow(AiAgent::Llm::SystemPromptsService).to receive(:conversation_faq_generator).and_return('system prompt')
       params = service.send(:chat_parameters)
 
       expect(params[:messages]).to include(
@@ -154,7 +154,7 @@ RSpec.describe Captain::Llm::ConversationFaqService do
       end
 
       it 'includes system prompt with correct language' do
-        allow(Captain::Llm::SystemPromptsService).to receive(:conversation_faq_generator)
+        allow(AiAgent::Llm::SystemPromptsService).to receive(:conversation_faq_generator)
           .with('french')
           .and_return('system prompt in french')
 

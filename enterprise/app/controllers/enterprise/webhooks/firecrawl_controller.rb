@@ -2,14 +2,14 @@ class Enterprise::Webhooks::FirecrawlController < ActionController::API
   before_action :validate_token
 
   def process_payload
-    Captain::Tools::FirecrawlParserJob.perform_later(topic_id: topic.id, payload: payload) if crawl_page_event?
+    AiAgent::Tools::FirecrawlParserJob.perform_later(topic_id: topic.id, payload: payload) if crawl_page_event?
 
     head :ok
   end
 
   private
 
-  include Captain::FirecrawlHelper
+  include AiAgent::FirecrawlHelper
 
   def payload
     permitted_params[:data]&.first&.to_h
@@ -20,7 +20,7 @@ class Enterprise::Webhooks::FirecrawlController < ActionController::API
   end
 
   def topic
-    @topic ||= Captain::Topic.find(permitted_params[:topic_id])
+    @topic ||= AiAgent::Topic.find(permitted_params[:topic_id])
   end
 
   def topic_token

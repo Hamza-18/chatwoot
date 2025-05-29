@@ -1,7 +1,7 @@
 FactoryBot.define do
-  factory :captain_copilot_message, class: 'CopilotMessage' do
+  factory :ai_agentcopilot_message, class: 'CopilotMessage' do
     account
-    copilot_thread { association :captain_copilot_thread }
+    copilot_thread { association :ai_agentcopilot_thread }
     message { { content: 'This is a test message' } }
     message_type { 0 }
   end

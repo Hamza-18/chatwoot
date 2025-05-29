@@ -26,7 +26,7 @@ const { t } = useI18n();
 const activeTopicLabel = computed(() => {
   return props.activeTopic
     ? props.activeTopic.name
-    : t('CAPTAIN.COPILOT.SELECT_TOPIC');
+    : t('AI_AGENT.COPILOT.SELECT_TOPIC');
 });
 </script>
 
@@ -36,7 +36,7 @@ const activeTopicLabel = computed(() => {
       <template #trigger="{ toggle, isOpen }">
         <Button
           :label="activeTopicLabel"
-          icon="i-woot-captain"
+          icon="i-woot-ai-agent"
           ghost
           slate
           xs

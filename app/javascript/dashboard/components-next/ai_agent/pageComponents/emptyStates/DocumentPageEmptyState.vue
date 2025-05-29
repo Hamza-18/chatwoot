@@ -1,9 +1,9 @@
 <script setup>
 import EmptyStateLayout from 'dashboard/components-next/EmptyStateLayout.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
-import DocumentCard from 'dashboard/components-next/captain/topic/DocumentCard.vue';
+import DocumentCard from 'dashboard/components-next/ai_agent/topic/DocumentCard.vue';
 import FeatureSpotlight from 'dashboard/components-next/feature-spotlight/FeatureSpotlight.vue';
-import { documentsList } from 'dashboard/components-next/captain/pageComponents/emptyStates/captainEmptyStateContent.js';
+import { documentsList } from 'dashboard/components-next/ai_agent/pageComponents/emptyStates/AiAgentEmptyStateContent.js';
 
 const emit = defineEmits(['click']);
 
@@ -14,16 +14,16 @@ const onClick = () => {
 
 <template>
   <FeatureSpotlight
-    :title="$t('CAPTAIN.DOCUMENTS.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
-    :note="$t('CAPTAIN.DOCUMENTS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
-    fallback-thumbnail="/assets/images/dashboard/captain/document-light.svg"
-    fallback-thumbnail-dark="/assets/images/dashboard/captain/document-dark.svg"
-    learn-more-url="https://chwt.app/captain-document"
+    :title="$t('AI_AGENT.DOCUMENTS.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
+    :note="$t('AI_AGENT.DOCUMENTS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
+    fallback-thumbnail="/assets/images/dashboard/ai_agent/document-light.svg"
+    fallback-thumbnail-dark="/assets/images/dashboard/ai_agent/document-dark.svg"
+    learn-more-url="https://chwt.app/ai-agent-document"
     class="mb-8"
   />
   <EmptyStateLayout
-    :title="$t('CAPTAIN.DOCUMENTS.EMPTY_STATE.TITLE')"
-    :subtitle="$t('CAPTAIN.DOCUMENTS.EMPTY_STATE.SUBTITLE')"
+    :title="$t('AI_AGENT.DOCUMENTS.EMPTY_STATE.TITLE')"
+    :subtitle="$t('AI_AGENT.DOCUMENTS.EMPTY_STATE.SUBTITLE')"
     :action-perms="['administrator']"
   >
     <template #empty-state-item>
@@ -41,7 +41,7 @@ const onClick = () => {
     </template>
     <template #actions>
       <Button
-        :label="$t('CAPTAIN.DOCUMENTS.ADD_NEW')"
+        :label="$t('AI_AGENT.DOCUMENTS.ADD_NEW')"
         icon="i-lucide-plus"
         @click="onClick"
       />

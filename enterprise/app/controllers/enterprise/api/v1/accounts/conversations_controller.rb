@@ -6,18 +6,18 @@ module Enterprise::Api::V1::Accounts::ConversationsController
 
   def copilot
     # First try to get the user's preferred topic from UI settings or from the request
-    topic_id = copilot_params[:topic_id] || current_user.ui_settings&.dig('preferred_captain_topic_id')
+    topic_id = copilot_params[:topic_id] || current_user.ui_settings&.dig('preferred_ai_agenttopic_id')
 
     # Find the topic either by ID or from inbox
     topic = if topic_id.present?
-                  Captain::Topic.find_by(id: topic_id, account_id: Current.account.id)
+                  AiAgent::Topic.find_by(id: topic_id, account_id: Current.account.id)
                 else
-                  @conversation.inbox.captain_topic
+                  @conversation.inbox.ai_agenttopic
                 end
 
-    return render json: { message: I18n.t('captain.copilot_error') } unless topic
+    return render json: { message: I18n.t('ai_agent.copilot_error') } unless topic
 
-    response = Captain::Copilot::ChatService.new(
+    response = AiAgent::Copilot::ChatService.new(
       topic,
       previous_history: copilot_params[:previous_history],
       conversation_id: @conversation.display_id,
@@ -28,7 +28,7 @@ module Enterprise::Api::V1::Accounts::ConversationsController
   end
 
   def inbox_topic
-    topic = @conversation.inbox.captain_topic
+    topic = @conversation.inbox.ai_agenttopic
 
     if topic
       render json: { topic: { id: topic.id, name: topic.name } }

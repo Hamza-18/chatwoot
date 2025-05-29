@@ -1,4 +1,4 @@
-class Captain::ToolRegistryService
+class AiAgent::ToolRegistryService
   attr_reader :registered_tools, :tools
 
   def initialize(topic, user: nil)

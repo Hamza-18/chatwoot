@@ -26,15 +26,17 @@ const dialogRef = ref(null);
 const responseForm = ref(null);
 
 const updateResponse = responseDetails =>
-  store.dispatch('captainResponses/update', {
+  store.dispatch('aiAgentResponses/update', {
     id: props.selectedResponse.id,
     ...responseDetails,
   });
 
-const i18nKey = computed(() => `CAPTAIN.RESPONSES.${props.type.toUpperCase()}`);
+const i18nKey = computed(
+  () => `AI_AGENT.RESPONSES.${props.type.toUpperCase()}`
+);
 
 const createResponse = responseDetails =>
-  store.dispatch('captainResponses/create', responseDetails);
+  store.dispatch('aiAgentResponses/create', responseDetails);
 
 const handleSubmit = async updatedResponse => {
   try {
@@ -67,7 +69,7 @@ defineExpose({ dialogRef });
   <Dialog
     ref="dialogRef"
     :title="$t(`${i18nKey}.TITLE`)"
-    :description="$t('CAPTAIN.RESPONSES.FORM_DESCRIPTION')"
+    :description="$t('AI_AGENT.RESPONSES.FORM_DESCRIPTION')"
     :show-cancel-button="false"
     :show-confirm-button="false"
     @close="handleClose"

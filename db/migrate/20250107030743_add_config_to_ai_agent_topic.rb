@@ -1,5 +1,5 @@
-class AddConfigToCaptainTopic < ActiveRecord::Migration[7.0]
+class AddConfigToAiAgentTopic < ActiveRecord::Migration[7.0]
   def change
-    add_column :captain_topics, :config, :jsonb, default: {}, null: false
+    add_column :ai_agenttopics, :config, :jsonb, default: {}, null: false
   end
 end

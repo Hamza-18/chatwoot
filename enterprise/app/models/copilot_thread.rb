@@ -19,7 +19,7 @@
 class CopilotThread < ApplicationRecord
   belongs_to :user
   belongs_to :account
-  belongs_to :topic, class_name: 'Captain::Topic'
+  belongs_to :topic, class_name: 'AiAgent::Topic'
   has_many :copilot_messages, dependent: :destroy_async
 
   validates :title, presence: true

@@ -1,9 +1,9 @@
 /* global axios */
 import ApiClient from '../ApiClient';
 
-class CaptainDocument extends ApiClient {
+class AiAgentDocument extends ApiClient {
   constructor() {
-    super('captain/documents', { accountScoped: true });
+    super('ai_agent/documents', { accountScoped: true });
   }
 
   get({ page = 1, searchKey, topicId } = {}) {
@@ -17,4 +17,4 @@ class CaptainDocument extends ApiClient {
   }
 }
 
-export default new CaptainDocument();
+export default new AiAgentDocument();

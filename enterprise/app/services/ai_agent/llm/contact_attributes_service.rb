@@ -1,4 +1,4 @@
-class Captain::Llm::ContactAttributesService < Llm::BaseOpenAiService
+class AiAgent::Llm::ContactAttributesService < Llm::BaseOpenAiService
   def initialize(topic, conversation)
     super()
     @topic = topic
@@ -25,7 +25,7 @@ class Captain::Llm::ContactAttributesService < Llm::BaseOpenAiService
   end
 
   def chat_parameters
-    prompt = Captain::Llm::SystemPromptsService.attributes_generator
+    prompt = AiAgent::Llm::SystemPromptsService.attributes_generator
     {
       model: @model,
       response_format: { type: 'json_object' },

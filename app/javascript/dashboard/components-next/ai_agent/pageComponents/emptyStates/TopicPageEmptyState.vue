@@ -1,9 +1,9 @@
 <script setup>
 import EmptyStateLayout from 'dashboard/components-next/EmptyStateLayout.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
-import TopicCard from 'dashboard/components-next/captain/topic/TopicCard.vue';
+import TopicCard from 'dashboard/components-next/ai_agent/topic/TopicCard.vue';
 import FeatureSpotlight from 'dashboard/components-next/feature-spotlight/FeatureSpotlight.vue';
-import { topicsList } from 'dashboard/components-next/captain/pageComponents/emptyStates/captainEmptyStateContent.js';
+import { topicsList } from 'dashboard/components-next/ai_agent/pageComponents/emptyStates/AiAgentEmptyStateContent.js';
 
 const emit = defineEmits(['click']);
 
@@ -14,16 +14,16 @@ const onClick = () => {
 
 <template>
   <FeatureSpotlight
-    :title="$t('CAPTAIN.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
-    :note="$t('CAPTAIN.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
-    fallback-thumbnail="/assets/images/dashboard/captain/topic-light.svg"
-    fallback-thumbnail-dark="/assets/images/dashboard/captain/topic-dark.svg"
-    learn-more-url="https://chwt.app/captain-topic"
+    :title="$t('AI_AGENT.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
+    :note="$t('AI_AGENT.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
+    fallback-thumbnail="/assets/images/dashboard/ai_agent/topic-light.svg"
+    fallback-thumbnail-dark="/assets/images/dashboard/ai_agent/topic-dark.svg"
+    learn-more-url="https://chwt.app/ai-agent-topic"
     class="mb-8"
   />
   <EmptyStateLayout
-    :title="$t('CAPTAIN.TOPICS.EMPTY_STATE.TITLE')"
-    :subtitle="$t('CAPTAIN.TOPICS.EMPTY_STATE.SUBTITLE')"
+    :title="$t('AI_AGENT.TOPICS.EMPTY_STATE.TITLE')"
+    :subtitle="$t('AI_AGENT.TOPICS.EMPTY_STATE.SUBTITLE')"
     :action-perms="['administrator']"
   >
     <template #empty-state-item>
@@ -40,7 +40,7 @@ const onClick = () => {
     </template>
     <template #actions>
       <Button
-        :label="$t('CAPTAIN.TOPICS.ADD_NEW')"
+        :label="$t('AI_AGENT.TOPICS.ADD_NEW')"
         icon="i-lucide-plus"
         @click="onClick"
       />

@@ -1,6 +1,6 @@
-class Api::V1::Accounts::Captain::DocumentsController < Api::V1::Accounts::BaseController
+class Api::V1::Accounts::AiAgent::DocumentsController < Api::V1::Accounts::BaseController
   before_action :current_account
-  before_action -> { check_authorization(Captain::Topic) }
+  before_action -> { check_authorization(AiAgent::Topic) }
 
   before_action :set_current_page, only: [:index]
   before_action :set_documents, except: [:create]
@@ -23,7 +23,7 @@ class Api::V1::Accounts::Captain::DocumentsController < Api::V1::Accounts::BaseC
 
     @document = @topic.documents.build(document_params)
     @document.save!
-  rescue Captain::Document::LimitExceededError => e
+  rescue AiAgent::Document::LimitExceededError => e
     render_could_not_create_error(e.message)
   end
 
@@ -35,7 +35,7 @@ class Api::V1::Accounts::Captain::DocumentsController < Api::V1::Accounts::BaseC
   private
 
   def set_documents
-    @documents = Current.account.captain_documents.includes(:topic).ordered
+    @documents = Current.account.ai_agentdocuments.includes(:topic).ordered
   end
 
   def set_document
@@ -43,7 +43,7 @@ class Api::V1::Accounts::Captain::DocumentsController < Api::V1::Accounts::BaseC
   end
 
   def set_topic
-    @topic = Current.account.captain_topics.find_by(id: document_params[:topic_id])
+    @topic = Current.account.ai_agenttopics.find_by(id: document_params[:topic_id])
   end
 
   def set_current_page

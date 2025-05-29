@@ -51,7 +51,7 @@ Rails.application.routes.draw do
           resources :agents, only: [:index, :create, :update, :destroy] do
             post :bulk_create, on: :collection
           end
-          namespace :captain do
+          namespace :ai_agent do
             resources :topics do
               member do
                 post :playground

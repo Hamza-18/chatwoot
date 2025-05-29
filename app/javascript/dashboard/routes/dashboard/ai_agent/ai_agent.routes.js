@@ -9,12 +9,12 @@ import ResponsesIndex from './responses/Index.vue';
 
 export const routes = [
   {
-    path: frontendURL('accounts/:accountId/captain/topics'),
+    path: frontendURL('accounts/:accountId/ai_agent/topics'),
     component: TopicIndex,
-    name: 'captain_topics_index',
+    name: 'ai_agenttopics_index',
     meta: {
       permissions: ['administrator', 'agent'],
-      featureFlag: FEATURE_FLAGS.CAPTAIN,
+      featureFlag: FEATURE_FLAGS.AI_AGENT,
       installationTypes: [
         INSTALLATION_TYPES.CLOUD,
         INSTALLATION_TYPES.ENTERPRISE,
@@ -22,12 +22,12 @@ export const routes = [
     },
   },
   {
-    path: frontendURL('accounts/:accountId/captain/topics/:topicId'),
+    path: frontendURL('accounts/:accountId/ai_agent/topics/:topicId'),
     component: TopicEdit,
-    name: 'captain_topics_edit',
+    name: 'ai_agenttopics_edit',
     meta: {
       permissions: ['administrator', 'agent'],
-      featureFlag: FEATURE_FLAGS.CAPTAIN,
+      featureFlag: FEATURE_FLAGS.AI_AGENT,
       installationTypes: [
         INSTALLATION_TYPES.CLOUD,
         INSTALLATION_TYPES.ENTERPRISE,
@@ -35,14 +35,12 @@ export const routes = [
     },
   },
   {
-    path: frontendURL(
-      'accounts/:accountId/captain/topics/:topicId/inboxes'
-    ),
+    path: frontendURL('accounts/:accountId/ai_agent/topics/:topicId/inboxes'),
     component: TopicInboxesIndex,
-    name: 'captain_topics_inboxes_index',
+    name: 'ai_agenttopics_inboxes_index',
     meta: {
       permissions: ['administrator', 'agent'],
-      featureFlag: FEATURE_FLAGS.CAPTAIN,
+      featureFlag: FEATURE_FLAGS.AI_AGENT,
       installationTypes: [
         INSTALLATION_TYPES.CLOUD,
         INSTALLATION_TYPES.ENTERPRISE,
@@ -50,12 +48,12 @@ export const routes = [
     },
   },
   {
-    path: frontendURL('accounts/:accountId/captain/documents'),
+    path: frontendURL('accounts/:accountId/ai_agent/documents'),
     component: DocumentsIndex,
-    name: 'captain_documents_index',
+    name: 'ai_agentdocuments_index',
     meta: {
       permissions: ['administrator', 'agent'],
-      featureFlag: FEATURE_FLAGS.CAPTAIN,
+      featureFlag: FEATURE_FLAGS.AI_AGENT,
       installationTypes: [
         INSTALLATION_TYPES.CLOUD,
         INSTALLATION_TYPES.ENTERPRISE,
@@ -63,12 +61,12 @@ export const routes = [
     },
   },
   {
-    path: frontendURL('accounts/:accountId/captain/responses'),
+    path: frontendURL('accounts/:accountId/ai_agent/responses'),
     component: ResponsesIndex,
-    name: 'captain_responses_index',
+    name: 'ai_agentresponses_index',
     meta: {
       permissions: ['administrator', 'agent'],
-      featureFlag: FEATURE_FLAGS.CAPTAIN,
+      featureFlag: FEATURE_FLAGS.AI_AGENT,
       installationTypes: [
         INSTALLATION_TYPES.CLOUD,
         INSTALLATION_TYPES.ENTERPRISE,

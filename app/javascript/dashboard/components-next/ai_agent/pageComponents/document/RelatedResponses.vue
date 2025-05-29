@@ -6,7 +6,7 @@ import Spinner from 'dashboard/components-next/spinner/Spinner.vue';
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 import ResponseCard from '../../topic/ResponseCard.vue';
 const props = defineProps({
-  captainDocument: {
+  aiAgentDocument: {
     type: Object,
     required: true,
   },
@@ -16,8 +16,8 @@ const { t } = useI18n();
 const store = useStore();
 const dialogRef = ref(null);
 
-const uiFlags = useMapGetter('captainResponses/getUIFlags');
-const responses = useMapGetter('captainResponses/getRecords');
+const uiFlags = useMapGetter('aiAgentResponses/getUIFlags');
+const responses = useMapGetter('aiAgentResponses/getRecords');
 const isFetching = computed(() => uiFlags.value.fetchingList);
 
 const handleClose = () => {
@@ -25,9 +25,9 @@ const handleClose = () => {
 };
 
 onMounted(() => {
-  store.dispatch('captainResponses/get', {
-    topicId: props.captainDocument.topic.id,
-    documentId: props.captainDocument.id,
+  store.dispatch('aiAgentResponses/get', {
+    topicId: props.aiAgentDocument.topic.id,
+    documentId: props.aiAgentDocument.id,
   });
 });
 defineExpose({ dialogRef });
@@ -37,8 +37,8 @@ defineExpose({ dialogRef });
   <Dialog
     ref="dialogRef"
     type="edit"
-    :title="t('CAPTAIN.DOCUMENTS.RELATED_RESPONSES.TITLE')"
-    :description="t('CAPTAIN.DOCUMENTS.RELATED_RESPONSES.DESCRIPTION')"
+    :title="t('AI_AGENT.DOCUMENTS.RELATED_RESPONSES.TITLE')"
+    :description="t('AI_AGENT.DOCUMENTS.RELATED_RESPONSES.DESCRIPTION')"
     :show-cancel-button="false"
     :show-confirm-button="false"
     overflow-y-auto

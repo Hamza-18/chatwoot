@@ -72,7 +72,7 @@ const statusAction = computed(() => {
   if (props.status === 'pending') {
     return [
       {
-        label: t('CAPTAIN.RESPONSES.OPTIONS.APPROVE'),
+        label: t('AI_AGENT.RESPONSES.OPTIONS.APPROVE'),
         value: 'approve',
         action: 'approve',
         icon: 'i-lucide-circle-check-big',
@@ -85,13 +85,13 @@ const statusAction = computed(() => {
 const menuItems = computed(() => [
   ...statusAction.value,
   {
-    label: t('CAPTAIN.RESPONSES.OPTIONS.EDIT_RESPONSE'),
+    label: t('AI_AGENT.RESPONSES.OPTIONS.EDIT_RESPONSE'),
     value: 'edit',
     action: 'edit',
     icon: 'i-lucide-pencil-line',
   },
   {
-    label: t('CAPTAIN.RESPONSES.OPTIONS.DELETE_RESPONSE'),
+    label: t('AI_AGENT.RESPONSES.OPTIONS.DELETE_RESPONSE'),
     value: 'delete',
     action: 'delete',
     icon: 'i-lucide-trash',
@@ -160,7 +160,7 @@ const handleDocumentableClick = () => {
         <span
           class="text-sm shrink-0 truncate text-n-slate-11 inline-flex items-center gap-1"
         >
-          <i class="i-woot-captain" />
+          <i class="i-woot-ai-agent" />
           {{ topic?.name || '' }}
         </span>
         <div
@@ -168,7 +168,7 @@ const handleDocumentableClick = () => {
           class="shrink-0 text-sm text-n-slate-11 inline-flex line-clamp-1 gap-1 ml-3"
         >
           <span
-            v-if="documentable.type === 'Captain::Document'"
+            v-if="documentable.type === 'AiAgent::Document'"
             class="inline-flex items-center gap-1 truncate over"
           >
             <i class="i-ph-files-light text-base" />
@@ -197,7 +197,7 @@ const handleDocumentableClick = () => {
             <i class="i-ph-chat-circle-dots text-base" />
             <span class="group-hover:underline">
               {{
-                t(`CAPTAIN.RESPONSES.DOCUMENTABLE.CONVERSATION`, {
+                t(`AI_AGENT.RESPONSES.DOCUMENTABLE.CONVERSATION`, {
                   id: documentable.display_id,
                 })
               }}
@@ -211,9 +211,9 @@ const handleDocumentableClick = () => {
         >
           <i
             class="i-ph-stack text-base"
-            :title="t('CAPTAIN.RESPONSES.STATUS.TITLE')"
+            :title="t('AI_AGENT.RESPONSES.STATUS.TITLE')"
           />
-          {{ t(`CAPTAIN.RESPONSES.STATUS.${status.toUpperCase()}`) }}
+          {{ t(`AI_AGENT.RESPONSES.STATUS.${status.toUpperCase()}`) }}
         </div>
       </div>
       <div

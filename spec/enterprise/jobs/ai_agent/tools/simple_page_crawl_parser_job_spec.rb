@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe Captain::Tools::SimplePageCrawlParserJob, type: :job do
+RSpec.describe AiAgent::Tools::SimplePageCrawlParserJob, type: :job do
   describe '#perform' do
-    let(:topic) { create(:captain_topic) }
+    let(:topic) { create(:ai_agenttopic) }
     let(:page_link) { 'https://example.com/page' }
     let(:page_title) { 'Example Page Title' }
     let(:content) { 'Some page content here' }
-    let(:crawler) { instance_double(Captain::Tools::SimplePageCrawlService) }
+    let(:crawler) { instance_double(AiAgent::Tools::SimplePageCrawlService) }
 
     before do
-      allow(Captain::Tools::SimplePageCrawlService).to receive(:new)
+      allow(AiAgent::Tools::SimplePageCrawlService).to receive(:new)
         .with(page_link)
         .and_return(crawler)
 
@@ -31,7 +31,7 @@ RSpec.describe Captain::Tools::SimplePageCrawlParserJob, type: :job do
       end
 
       it 'updates existing document if one exists' do
-        existing_document = create(:captain_document,
+        existing_document = create(:ai_agentdocument,
                                    topic: topic,
                                    external_link: page_link,
                                    name: 'Old Title',

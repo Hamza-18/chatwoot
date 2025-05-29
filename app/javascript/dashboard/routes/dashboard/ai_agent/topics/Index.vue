@@ -3,22 +3,22 @@ import { computed, onMounted, ref, nextTick } from 'vue';
 import { useMapGetter, useStore } from 'dashboard/composables/store';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 
-import TopicCard from 'dashboard/components-next/captain/topic/TopicCard.vue';
-import DeleteDialog from 'dashboard/components-next/captain/pageComponents/DeleteDialog.vue';
-import PageLayout from 'dashboard/components-next/captain/PageLayout.vue';
-import CaptainPaywall from 'dashboard/components-next/captain/pageComponents/Paywall.vue';
-import CreateTopicDialog from 'dashboard/components-next/captain/pageComponents/topic/CreateTopicDialog.vue';
-import TopicPageEmptyState from 'dashboard/components-next/captain/pageComponents/emptyStates/TopicPageEmptyState.vue';
+import TopicCard from 'dashboard/components-next/ai_agent/topic/TopicCard.vue';
+import DeleteDialog from 'dashboard/components-next/ai_agent/pageComponents/DeleteDialog.vue';
+import PageLayout from 'dashboard/components-next/ai_agent/PageLayout.vue';
+import AiAgentPaywall from 'dashboard/components-next/ai_agent/pageComponents/Paywall.vue';
+import CreateTopicDialog from 'dashboard/components-next/ai_agent/pageComponents/topic/CreateTopicDialog.vue';
+import TopicPageEmptyState from 'dashboard/components-next/ai_agent/pageComponents/emptyStates/TopicPageEmptyState.vue';
 import FeatureSpotlightPopover from 'dashboard/components-next/feature-spotlight/FeatureSpotlightPopover.vue';
-import LimitBanner from 'dashboard/components-next/captain/pageComponents/response/LimitBanner.vue';
+import LimitBanner from 'dashboard/components-next/ai_agent/pageComponents/response/LimitBanner.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
 const store = useStore();
 const dialogType = ref('');
-const uiFlags = useMapGetter('captainTopics/getUIFlags');
-const topics = useMapGetter('captainTopics/getRecords');
+const uiFlags = useMapGetter('aiAgentTopics/getUIFlags');
+const topics = useMapGetter('aiAgentTopics/getRecords');
 const isFetching = computed(() => uiFlags.value.fetchingList);
 
 const selectedTopic = ref(null);
@@ -37,22 +37,20 @@ const handleCreate = () => {
 
 const handleEdit = () => {
   router.push({
-    name: 'captain_topics_edit',
+    name: 'ai_agenttopics_edit',
     params: { topicId: selectedTopic.value.id },
   });
 };
 
 const handleViewConnectedInboxes = () => {
   router.push({
-    name: 'captain_topics_inboxes_index',
+    name: 'ai_agenttopics_inboxes_index',
     params: { topicId: selectedTopic.value.id },
   });
 };
 
 const handleAction = ({ action, id }) => {
-  selectedTopic.value = topics.value.find(
-    topic => id === topic.id
-  );
+  selectedTopic.value = topics.value.find(topic => id === topic.id);
   nextTick(() => {
     if (action === 'delete') {
       handleDelete();
@@ -71,28 +69,28 @@ const handleCreateClose = () => {
   selectedTopic.value = null;
 };
 
-onMounted(() => store.dispatch('captainTopics/get'));
+onMounted(() => store.dispatch('aiAgentTopics/get'));
 </script>
 
 <template>
   <PageLayout
-    :header-title="$t('CAPTAIN.TOPICS.HEADER')"
-    :button-label="$t('CAPTAIN.TOPICS.ADD_NEW')"
+    :header-title="$t('AI_AGENT.TOPICS.HEADER')"
+    :button-label="$t('AI_AGENT.TOPICS.ADD_NEW')"
     :button-policy="['administrator']"
     :show-pagination-footer="false"
     :is-fetching="isFetching"
     :is-empty="!topics.length"
-    :feature-flag="FEATURE_FLAGS.CAPTAIN"
+    :feature-flag="FEATURE_FLAGS.AI_AGENT"
     @click="handleCreate"
   >
     <template #knowMore>
       <FeatureSpotlightPopover
-        :button-label="$t('CAPTAIN.HEADER_KNOW_MORE')"
-        :title="$t('CAPTAIN.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
-        :note="$t('CAPTAIN.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
-        fallback-thumbnail="/assets/images/dashboard/captain/topic-popover-light.svg"
-        fallback-thumbnail-dark="/assets/images/dashboard/captain/topic-popover-dark.svg"
-        learn-more-url="https://chwt.app/captain-topic"
+        :button-label="$t('AI_AGENT.HEADER_KNOW_MORE')"
+        :title="$t('AI_AGENT.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
+        :note="$t('AI_AGENT.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
+        fallback-thumbnail="/assets/images/dashboard/ai_agent/topic-popover-light.svg"
+        fallback-thumbnail-dark="/assets/images/dashboard/ai_agent/topic-popover-dark.svg"
+        learn-more-url="https://chwt.app/ai-agent-topic"
       />
     </template>
     <template #emptyState>
@@ -100,7 +98,7 @@ onMounted(() => store.dispatch('captainTopics/get'));
     </template>
 
     <template #paywall>
-      <CaptainPaywall />
+      <AiAgentPaywall />
     </template>
 
     <template #body>

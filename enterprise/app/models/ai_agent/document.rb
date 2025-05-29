@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: captain_documents
+# Table name: ai_agentdocuments
 #
 #  id            :bigint           not null, primary key
 #  content       :text
@@ -14,17 +14,17 @@
 #
 # Indexes
 #
-#  index_captain_documents_on_account_id                      (account_id)
-#  index_captain_documents_on_topic_id                    (topic_id)
-#  index_captain_documents_on_topic_id_and_external_link  (topic_id,external_link) UNIQUE
-#  index_captain_documents_on_status                          (status)
+#  index_ai_agentdocuments_on_account_id                      (account_id)
+#  index_ai_agentdocuments_on_topic_id                    (topic_id)
+#  index_ai_agentdocuments_on_topic_id_and_external_link  (topic_id,external_link) UNIQUE
+#  index_ai_agentdocuments_on_status                          (status)
 #
-class Captain::Document < ApplicationRecord
+class AiAgent::Document < ApplicationRecord
   class LimitExceededError < StandardError; end
-  self.table_name = 'captain_documents'
+  self.table_name = 'ai_agentdocuments'
 
-  belongs_to :topic, class_name: 'Captain::Topic'
-  has_many :responses, class_name: 'Captain::TopicResponse', dependent: :destroy, as: :documentable
+  belongs_to :topic, class_name: 'AiAgent::Topic'
+  has_many :responses, class_name: 'AiAgent::TopicResponse', dependent: :destroy, as: :documentable
   belongs_to :account
 
   validates :external_link, presence: true
@@ -52,13 +52,13 @@ class Captain::Document < ApplicationRecord
   def enqueue_crawl_job
     return if status != 'in_progress'
 
-    Captain::Documents::CrawlJob.perform_later(self)
+    AiAgent::Documents::CrawlJob.perform_later(self)
   end
 
   def enqueue_response_builder_job
     return if status != 'available'
 
-    Captain::Documents::ResponseBuilderJob.perform_later(self)
+    AiAgent::Documents::ResponseBuilderJob.perform_later(self)
   end
 
   def update_document_usage
@@ -70,7 +70,7 @@ class Captain::Document < ApplicationRecord
   end
 
   def ensure_within_plan_limit
-    limits = account.usage_limits[:captain][:documents]
+    limits = account.usage_limits[:ai_agent][:documents]
     raise LimitExceededError, 'Document limit exceeded' unless limits[:current_available].positive?
   end
 end

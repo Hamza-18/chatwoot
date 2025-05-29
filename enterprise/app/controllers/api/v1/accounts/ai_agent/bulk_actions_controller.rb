@@ -1,6 +1,6 @@
-class Api::V1::Accounts::Captain::BulkActionsController < Api::V1::Accounts::BaseController
+class Api::V1::Accounts::AiAgent::BulkActionsController < Api::V1::Accounts::BaseController
   before_action :current_account
-  before_action -> { check_authorization(Captain::Topic) }
+  before_action -> { check_authorization(AiAgent::Topic) }
   before_action :validate_params
   before_action :type_matches?
 
@@ -32,7 +32,7 @@ class Api::V1::Accounts::Captain::BulkActionsController < Api::V1::Accounts::Bas
   end
 
   def handle_topic_responses
-    responses = Current.account.captain_topic_responses.where(id: params[:ids])
+    responses = Current.account.ai_agenttopic_responses.where(id: params[:ids])
     return unless responses.exists?
 
     case params[:fields][:status]

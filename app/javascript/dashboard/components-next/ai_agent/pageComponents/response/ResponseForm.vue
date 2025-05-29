@@ -25,8 +25,8 @@ const emit = defineEmits(['submit', 'cancel']);
 const { t } = useI18n();
 
 const formState = {
-  uiFlags: useMapGetter('captainResponses/getUIFlags'),
-  topics: useMapGetter('captainTopics/getRecords'),
+  uiFlags: useMapGetter('aiAgentResponses/getUIFlags'),
+  topics: useMapGetter('aiAgentTopics/getRecords'),
 };
 
 const initialState = {
@@ -56,7 +56,7 @@ const isLoading = computed(() => formState.uiFlags.value.creatingItem);
 
 const getErrorMessage = (field, errorKey) => {
   return v$.value[field].$error
-    ? t(`CAPTAIN.RESPONSES.FORM.${errorKey}.ERROR`)
+    ? t(`AI_AGENT.RESPONSES.FORM.${errorKey}.ERROR`)
     : '';
 };
 
@@ -110,16 +110,16 @@ watch(
   <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
     <Input
       v-model="state.question"
-      :label="t('CAPTAIN.RESPONSES.FORM.QUESTION.LABEL')"
-      :placeholder="t('CAPTAIN.RESPONSES.FORM.QUESTION.PLACEHOLDER')"
+      :label="t('AI_AGENT.RESPONSES.FORM.QUESTION.LABEL')"
+      :placeholder="t('AI_AGENT.RESPONSES.FORM.QUESTION.PLACEHOLDER')"
       :message="formErrors.question"
       :message-type="formErrors.question ? 'error' : 'info'"
     />
 
     <Editor
       v-model="state.answer"
-      :label="t('CAPTAIN.RESPONSES.FORM.ANSWER.LABEL')"
-      :placeholder="t('CAPTAIN.RESPONSES.FORM.ANSWER.PLACEHOLDER')"
+      :label="t('AI_AGENT.RESPONSES.FORM.ANSWER.LABEL')"
+      :placeholder="t('AI_AGENT.RESPONSES.FORM.ANSWER.PLACEHOLDER')"
       :message="formErrors.answer"
       :max-length="10000"
       :message-type="formErrors.answer ? 'error' : 'info'"
@@ -127,14 +127,14 @@ watch(
 
     <div class="flex flex-col gap-1">
       <label for="topic" class="mb-0.5 text-sm font-medium text-n-slate-12">
-        {{ t('CAPTAIN.RESPONSES.FORM.TOPIC.LABEL') }}
+        {{ t('AI_AGENT.RESPONSES.FORM.TOPIC.LABEL') }}
       </label>
       <ComboBox
         id="topic"
         v-model="state.topicId"
         :options="topicList"
         :has-error="!!formErrors.topicId"
-        :placeholder="t('CAPTAIN.RESPONSES.FORM.TOPIC.PLACEHOLDER')"
+        :placeholder="t('AI_AGENT.RESPONSES.FORM.TOPIC.PLACEHOLDER')"
         class="[&>div>button]:bg-n-alpha-black2 [&>div>button:not(.focused)]:dark:outline-n-weak [&>div>button:not(.focused)]:hover:!outline-n-slate-6"
         :message="formErrors.topicId"
       />
@@ -145,13 +145,13 @@ watch(
         type="button"
         variant="faded"
         color="slate"
-        :label="t('CAPTAIN.FORM.CANCEL')"
+        :label="t('AI_AGENT.FORM.CANCEL')"
         class="w-full bg-n-alpha-2 n-blue-text hover:bg-n-alpha-3"
         @click="handleCancel"
       />
       <Button
         type="submit"
-        :label="t(`CAPTAIN.FORM.${mode.toUpperCase()}`)"
+        :label="t(`AI_AGENT.FORM.${mode.toUpperCase()}`)"
         class="w-full"
         :is-loading="isLoading"
         :disabled="isLoading"

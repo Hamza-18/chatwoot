@@ -1,8 +1,8 @@
-class Captain::Tools::SimplePageCrawlParserJob < ApplicationJob
+class AiAgent::Tools::SimplePageCrawlParserJob < ApplicationJob
   queue_as :low
 
   def perform(topic_id:, page_link:)
-    topic = Captain::Topic.find(topic_id)
+    topic = AiAgent::Topic.find(topic_id)
     account = topic.account
 
     if limit_exceeded?(account)
@@ -10,7 +10,7 @@ class Captain::Tools::SimplePageCrawlParserJob < ApplicationJob
       return
     end
 
-    crawler = Captain::Tools::SimplePageCrawlService.new(page_link)
+    crawler = AiAgent::Tools::SimplePageCrawlService.new(page_link)
 
     page_title = crawler.page_title || ''
     content = crawler.body_text_content || ''
@@ -29,7 +29,7 @@ class Captain::Tools::SimplePageCrawlParserJob < ApplicationJob
   private
 
   def limit_exceeded?(account)
-    limits = account.usage_limits[:captain][:documents]
+    limits = account.usage_limits[:ai_agent][:documents]
     limits[:current_available].negative? || limits[:current_available].zero?
   end
 end

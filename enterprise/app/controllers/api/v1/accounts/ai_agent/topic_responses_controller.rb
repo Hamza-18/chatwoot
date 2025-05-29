@@ -1,6 +1,6 @@
-class Api::V1::Accounts::Captain::TopicResponsesController < Api::V1::Accounts::BaseController
+class Api::V1::Accounts::AiAgent::TopicResponsesController < Api::V1::Accounts::BaseController
   before_action :current_account
-  before_action -> { check_authorization(Captain::Topic) }
+  before_action -> { check_authorization(AiAgent::Topic) }
 
   before_action :set_current_page, only: [:index]
   before_action :set_topic, only: [:create]
@@ -16,7 +16,7 @@ class Api::V1::Accounts::Captain::TopicResponsesController < Api::V1::Accounts::
     if permitted_params[:document_id].present?
       base_query = base_query.where(
         documentable_id: permitted_params[:document_id],
-        documentable_type: 'Captain::Document'
+        documentable_type: 'AiAgent::Document'
       )
     end
 
@@ -30,7 +30,7 @@ class Api::V1::Accounts::Captain::TopicResponsesController < Api::V1::Accounts::
   def show; end
 
   def create
-    @response = Current.account.captain_topic_responses.new(response_params)
+    @response = Current.account.ai_agenttopic_responses.new(response_params)
     @response.documentable = Current.user
     @response.save!
   end
@@ -47,11 +47,11 @@ class Api::V1::Accounts::Captain::TopicResponsesController < Api::V1::Accounts::
   private
 
   def set_topic
-    @topic = Current.account.captain_topics.find_by(id: params[:topic_id])
+    @topic = Current.account.ai_agenttopics.find_by(id: params[:topic_id])
   end
 
   def set_responses
-    @responses = Current.account.captain_topic_responses.includes(:topic, :documentable).ordered
+    @responses = Current.account.ai_agenttopic_responses.includes(:topic, :documentable).ordered
   end
 
   def set_response
