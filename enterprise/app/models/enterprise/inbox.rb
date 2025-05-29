@@ -10,7 +10,7 @@ module Enterprise::Inbox
   end
 
   def captain_active?
-    captain_assistant.present? && more_responses?
+    captain_topic.present? && more_responses?
   end
 
   private

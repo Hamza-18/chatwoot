@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: captain_assistants
+# Table name: captain_topics
 #
 #  id          :bigint           not null, primary key
 #  config      :jsonb            not null
@@ -12,19 +12,19 @@
 #
 # Indexes
 #
-#  index_captain_assistants_on_account_id  (account_id)
+#  index_captain_topics_on_account_id  (account_id)
 #
-class Captain::Assistant < ApplicationRecord
+class Captain::Topic < ApplicationRecord
   include Avatarable
 
-  self.table_name = 'captain_assistants'
+  self.table_name = 'captain_topics'
 
   belongs_to :account
   has_many :documents, class_name: 'Captain::Document', dependent: :destroy_async
-  has_many :responses, class_name: 'Captain::AssistantResponse', dependent: :destroy_async
+  has_many :responses, class_name: 'Captain::TopicResponse', dependent: :destroy_async
   has_many :captain_inboxes,
            class_name: 'CaptainInbox',
-           foreign_key: :captain_assistant_id,
+           foreign_key: :captain_topic_id,
            dependent: :destroy_async
   has_many :inboxes,
            through: :captain_inboxes
@@ -50,7 +50,7 @@ class Captain::Assistant < ApplicationRecord
       avatar_url: avatar_url.presence || default_avatar_url,
       description: description,
       created_at: created_at,
-      type: 'captain_assistant'
+      type: 'captain_topic'
     }
   end
 
@@ -61,7 +61,7 @@ class Captain::Assistant < ApplicationRecord
       avatar_url: avatar_url.presence || default_avatar_url,
       description: description,
       created_at: created_at,
-      type: 'captain_assistant'
+      type: 'captain_topic'
     }
   end
 

@@ -1,6 +1,6 @@
 json.payload do
   json.array! @responses do |response|
-    json.partial! 'api/v1/models/captain/assistant_response', formats: [:json], resource: response
+    json.partial! 'api/v1/models/captain/topic_response', formats: [:json], resource: response
   end
 end
 

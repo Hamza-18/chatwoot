@@ -9,24 +9,24 @@ import DropdownBody from 'next/dropdown-menu/base/DropdownBody.vue';
 import DropdownItem from 'next/dropdown-menu/base/DropdownItem.vue';
 
 const props = defineProps({
-  assistants: {
+  topics: {
     type: Array,
     required: true,
   },
-  activeAssistant: {
+  activeTopic: {
     type: Object,
     required: true,
   },
 });
 
-const emit = defineEmits(['setAssistant']);
+const emit = defineEmits(['setTopic']);
 
 const { t } = useI18n();
 
-const activeAssistantLabel = computed(() => {
-  return props.activeAssistant
-    ? props.activeAssistant.name
-    : t('CAPTAIN.COPILOT.SELECT_ASSISTANT');
+const activeTopicLabel = computed(() => {
+  return props.activeTopic
+    ? props.activeTopic.name
+    : t('CAPTAIN.COPILOT.SELECT_TOPIC');
 });
 </script>
 
@@ -35,7 +35,7 @@ const activeAssistantLabel = computed(() => {
     <DropdownContainer>
       <template #trigger="{ toggle, isOpen }">
         <Button
-          :label="activeAssistantLabel"
+          :label="activeTopicLabel"
           icon="i-woot-captain"
           ghost
           slate
@@ -47,24 +47,24 @@ const activeAssistantLabel = computed(() => {
       <DropdownBody class="bottom-9 min-w-64 z-50" strong>
         <DropdownSection class="max-h-80 overflow-scroll">
           <DropdownItem
-            v-for="assistant in assistants"
-            :key="assistant.id"
+            v-for="topic in topics"
+            :key="topic.id"
             class="!items-start !gap-1 flex-col cursor-pointer"
-            @click="() => emit('setAssistant', assistant)"
+            @click="() => emit('setTopic', topic)"
           >
             <template #label>
               <div class="flex gap-1 justify-between w-full">
                 <div class="items-start flex gap-1 flex-col">
                   <span class="text-n-slate-12 text-sm">
-                    {{ assistant.name }}
+                    {{ topic.name }}
                   </span>
                   <span class="line-clamp-2 text-n-slate-11 text-xs">
-                    {{ assistant.description }}
+                    {{ topic.description }}
                   </span>
                 </div>
 
                 <div
-                  v-if="assistant.id === activeAssistant?.id"
+                  v-if="topic.id === activeTopic?.id"
                   class="flex items-center justify-center flex-shrink-0 w-4 h-4 rounded-full bg-n-slate-12 dark:bg-n-slate-11"
                 >
                   <i

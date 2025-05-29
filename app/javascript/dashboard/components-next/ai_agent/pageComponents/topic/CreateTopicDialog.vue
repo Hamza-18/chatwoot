@@ -5,10 +5,10 @@ import { useAlert } from 'dashboard/composables';
 import { useI18n } from 'vue-i18n';
 
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
-import AssistantForm from './AssistantForm.vue';
+import TopicForm from './TopicForm.vue';
 
 const props = defineProps({
-  selectedAssistant: {
+  selectedTopic: {
     type: Object,
     default: () => ({}),
   },
@@ -23,27 +23,27 @@ const { t } = useI18n();
 const store = useStore();
 
 const dialogRef = ref(null);
-const assistantForm = ref(null);
+const topicForm = ref(null);
 
-const updateAssistant = assistantDetails =>
-  store.dispatch('captainAssistants/update', {
-    id: props.selectedAssistant.id,
-    ...assistantDetails,
+const updateTopic = topicDetails =>
+  store.dispatch('captainTopics/update', {
+    id: props.selectedTopic.id,
+    ...topicDetails,
   });
 
 const i18nKey = computed(
-  () => `CAPTAIN.ASSISTANTS.${props.type.toUpperCase()}`
+  () => `CAPTAIN.TOPICS.${props.type.toUpperCase()}`
 );
 
-const createAssistant = assistantDetails =>
-  store.dispatch('captainAssistants/create', assistantDetails);
+const createTopic = topicDetails =>
+  store.dispatch('captainTopics/create', topicDetails);
 
-const handleSubmit = async updatedAssistant => {
+const handleSubmit = async updatedTopic => {
   try {
     if (props.type === 'edit') {
-      await updateAssistant(updatedAssistant);
+      await updateTopic(updatedTopic);
     } else {
-      await createAssistant(updatedAssistant);
+      await createTopic(updatedTopic);
     }
     useAlert(t(`${i18nKey.value}.SUCCESS_MESSAGE`));
     dialogRef.value.close();
@@ -69,16 +69,16 @@ defineExpose({ dialogRef });
     ref="dialogRef"
     type="edit"
     :title="t(`${i18nKey}.TITLE`)"
-    :description="t('CAPTAIN.ASSISTANTS.FORM_DESCRIPTION')"
+    :description="t('CAPTAIN.TOPICS.FORM_DESCRIPTION')"
     :show-cancel-button="false"
     :show-confirm-button="false"
     overflow-y-auto
     @close="handleClose"
   >
-    <AssistantForm
-      ref="assistantForm"
+    <TopicForm
+      ref="topicForm"
       :mode="type"
-      :assistant="selectedAssistant"
+      :topic="selectedTopic"
       @submit="handleSubmit"
       @cancel="handleCancel"
     />

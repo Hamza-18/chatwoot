@@ -16,7 +16,7 @@ const props = defineProps({
     required: true,
     validator: value => ['edit', 'create'].includes(value),
   },
-  assistant: {
+  topic: {
     type: Object,
     default: () => ({}),
   },
@@ -27,7 +27,7 @@ const emit = defineEmits(['submit']);
 const { t } = useI18n();
 
 const formState = {
-  uiFlags: useMapGetter('captainAssistants/getUIFlags'),
+  uiFlags: useMapGetter('captainTopics/getUIFlags'),
 };
 
 const initialState = {
@@ -75,10 +75,10 @@ const formErrors = computed(() => ({
   instructions: getErrorMessage('instructions'),
 }));
 
-const updateStateFromAssistant = assistant => {
-  const { config = {} } = assistant;
-  state.name = assistant.name;
-  state.description = assistant.description;
+const updateStateFromTopic = topic => {
+  const { config = {} } = topic;
+  state.name = topic.name;
+  state.description = topic.description;
   state.productName = config.product_name;
   state.welcomeMessage = config.welcome_message;
   state.handoffMessage = config.handoff_message;
@@ -103,7 +103,7 @@ const handleBasicInfoUpdate = async () => {
     name: state.name,
     description: state.description,
     config: {
-      ...props.assistant.config,
+      ...props.topic.config,
       product_name: state.productName,
     },
   };
@@ -121,7 +121,7 @@ const handleSystemMessagesUpdate = async () => {
 
   const payload = {
     config: {
-      ...props.assistant.config,
+      ...props.topic.config,
       welcome_message: state.welcomeMessage,
       handoff_message: state.handoffMessage,
       resolution_message: state.resolutionMessage,
@@ -137,7 +137,7 @@ const handleInstructionsUpdate = async () => {
 
   const payload = {
     config: {
-      ...props.assistant.config,
+      ...props.topic.config,
       temperature: state.temperature || 1,
       instructions: state.instructions,
     },
@@ -149,7 +149,7 @@ const handleInstructionsUpdate = async () => {
 const handleFeaturesUpdate = () => {
   const payload = {
     config: {
-      ...props.assistant.config,
+      ...props.topic.config,
       feature_faq: state.features.conversationFaqs,
       feature_memory: state.features.memories,
     },
@@ -159,10 +159,10 @@ const handleFeaturesUpdate = () => {
 };
 
 watch(
-  () => props.assistant,
-  newAssistant => {
-    if (props.mode === 'edit' && newAssistant) {
-      updateStateFromAssistant(newAssistant);
+  () => props.topic,
+  newTopic => {
+    if (props.mode === 'edit' && newTopic) {
+      updateStateFromTopic(newTopic);
     }
   },
   { immediate: true }
@@ -173,30 +173,30 @@ watch(
   <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
     <!-- Basic Information Section -->
     <Accordion
-      :title="t('CAPTAIN.ASSISTANTS.FORM.SECTIONS.BASIC_INFO')"
+      :title="t('CAPTAIN.TOPICS.FORM.SECTIONS.BASIC_INFO')"
       is-open
     >
       <div class="flex flex-col gap-4 pt-4">
         <Input
           v-model="state.name"
-          :label="t('CAPTAIN.ASSISTANTS.FORM.NAME.LABEL')"
-          :placeholder="t('CAPTAIN.ASSISTANTS.FORM.NAME.PLACEHOLDER')"
+          :label="t('CAPTAIN.TOPICS.FORM.NAME.LABEL')"
+          :placeholder="t('CAPTAIN.TOPICS.FORM.NAME.PLACEHOLDER')"
           :message="formErrors.name"
           :message-type="formErrors.name ? 'error' : 'info'"
         />
 
         <Editor
           v-model="state.description"
-          :label="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.LABEL')"
-          :placeholder="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.PLACEHOLDER')"
+          :label="t('CAPTAIN.TOPICS.FORM.DESCRIPTION.LABEL')"
+          :placeholder="t('CAPTAIN.TOPICS.FORM.DESCRIPTION.PLACEHOLDER')"
           :message="formErrors.description"
           :message-type="formErrors.description ? 'error' : 'info'"
         />
 
         <Input
           v-model="state.productName"
-          :label="t('CAPTAIN.ASSISTANTS.FORM.PRODUCT_NAME.LABEL')"
-          :placeholder="t('CAPTAIN.ASSISTANTS.FORM.PRODUCT_NAME.PLACEHOLDER')"
+          :label="t('CAPTAIN.TOPICS.FORM.PRODUCT_NAME.LABEL')"
+          :placeholder="t('CAPTAIN.TOPICS.FORM.PRODUCT_NAME.PLACEHOLDER')"
           :message="formErrors.productName"
           :message-type="formErrors.productName ? 'error' : 'info'"
         />
@@ -207,18 +207,18 @@ watch(
             :loading="isLoading"
             @click="handleBasicInfoUpdate"
           >
-            {{ t('CAPTAIN.ASSISTANTS.FORM.UPDATE') }}
+            {{ t('CAPTAIN.TOPICS.FORM.UPDATE') }}
           </Button>
         </div>
       </div>
     </Accordion>
 
     <!-- Instructions Section -->
-    <Accordion :title="t('CAPTAIN.ASSISTANTS.FORM.SECTIONS.INSTRUCTIONS')">
+    <Accordion :title="t('CAPTAIN.TOPICS.FORM.SECTIONS.INSTRUCTIONS')">
       <div class="flex flex-col gap-4">
         <Editor
           v-model="state.instructions"
-          :placeholder="t('CAPTAIN.ASSISTANTS.FORM.INSTRUCTIONS.PLACEHOLDER')"
+          :placeholder="t('CAPTAIN.TOPICS.FORM.INSTRUCTIONS.PLACEHOLDER')"
           :message="formErrors.instructions"
           :max-length="20000"
           :message-type="formErrors.instructions ? 'error' : 'info'"
@@ -226,7 +226,7 @@ watch(
 
         <div class="flex flex-col gap-2 mt-4">
           <label class="text-sm font-medium text-n-slate-12">
-            {{ t('CAPTAIN.ASSISTANTS.FORM.TEMPERATURE.LABEL') }}
+            {{ t('CAPTAIN.TOPICS.FORM.TEMPERATURE.LABEL') }}
           </label>
           <div class="flex items-center gap-4">
             <input
@@ -240,14 +240,14 @@ watch(
             <span class="text-sm text-n-slate-12">{{ state.temperature }}</span>
           </div>
           <p class="text-sm text-n-slate-11 italic">
-            {{ t('CAPTAIN.ASSISTANTS.FORM.TEMPERATURE.DESCRIPTION') }}
+            {{ t('CAPTAIN.TOPICS.FORM.TEMPERATURE.DESCRIPTION') }}
           </p>
         </div>
         <div class="flex justify-end">
           <Button
             size="small"
             :loading="isLoading"
-            :label="t('CAPTAIN.ASSISTANTS.FORM.UPDATE')"
+            :label="t('CAPTAIN.TOPICS.FORM.UPDATE')"
             @click="handleInstructionsUpdate"
           />
         </div>
@@ -255,13 +255,13 @@ watch(
     </Accordion>
 
     <!-- Greeting Messages Section -->
-    <Accordion :title="t('CAPTAIN.ASSISTANTS.FORM.SECTIONS.SYSTEM_MESSAGES')">
+    <Accordion :title="t('CAPTAIN.TOPICS.FORM.SECTIONS.SYSTEM_MESSAGES')">
       <div class="flex flex-col gap-4 pt-4">
         <Editor
           v-model="state.handoffMessage"
-          :label="t('CAPTAIN.ASSISTANTS.FORM.HANDOFF_MESSAGE.LABEL')"
+          :label="t('CAPTAIN.TOPICS.FORM.HANDOFF_MESSAGE.LABEL')"
           :placeholder="
-            t('CAPTAIN.ASSISTANTS.FORM.HANDOFF_MESSAGE.PLACEHOLDER')
+            t('CAPTAIN.TOPICS.FORM.HANDOFF_MESSAGE.PLACEHOLDER')
           "
           :message="formErrors.handoffMessage"
           :message-type="formErrors.handoffMessage ? 'error' : 'info'"
@@ -269,9 +269,9 @@ watch(
 
         <Editor
           v-model="state.resolutionMessage"
-          :label="t('CAPTAIN.ASSISTANTS.FORM.RESOLUTION_MESSAGE.LABEL')"
+          :label="t('CAPTAIN.TOPICS.FORM.RESOLUTION_MESSAGE.LABEL')"
           :placeholder="
-            t('CAPTAIN.ASSISTANTS.FORM.RESOLUTION_MESSAGE.PLACEHOLDER')
+            t('CAPTAIN.TOPICS.FORM.RESOLUTION_MESSAGE.PLACEHOLDER')
           "
           :message="formErrors.resolutionMessage"
           :message-type="formErrors.resolutionMessage ? 'error' : 'info'"
@@ -281,7 +281,7 @@ watch(
           <Button
             size="small"
             :loading="isLoading"
-            :label="t('CAPTAIN.ASSISTANTS.FORM.UPDATE')"
+            :label="t('CAPTAIN.TOPICS.FORM.UPDATE')"
             @click="handleSystemMessagesUpdate"
           />
         </div>
@@ -289,11 +289,11 @@ watch(
     </Accordion>
 
     <!-- Features Section -->
-    <Accordion :title="t('CAPTAIN.ASSISTANTS.FORM.SECTIONS.FEATURES')">
+    <Accordion :title="t('CAPTAIN.TOPICS.FORM.SECTIONS.FEATURES')">
       <div class="flex flex-col gap-4 pt-4">
         <div class="flex flex-col gap-2">
           <label class="text-sm font-medium text-n-slate-12">
-            {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.TITLE') }}
+            {{ t('CAPTAIN.TOPICS.FORM.FEATURES.TITLE') }}
           </label>
           <div class="flex flex-col gap-2">
             <label class="flex items-center gap-2">
@@ -303,7 +303,7 @@ watch(
                 class="form-checkbox"
               />
               {{
-                t('CAPTAIN.ASSISTANTS.FORM.FEATURES.ALLOW_CONVERSATION_FAQS')
+                t('CAPTAIN.TOPICS.FORM.FEATURES.ALLOW_CONVERSATION_FAQS')
               }}
             </label>
             <label class="flex items-center gap-2">
@@ -312,7 +312,7 @@ watch(
                 type="checkbox"
                 class="form-checkbox"
               />
-              {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.ALLOW_MEMORIES') }}
+              {{ t('CAPTAIN.TOPICS.FORM.FEATURES.ALLOW_MEMORIES') }}
             </label>
           </div>
         </div>
@@ -321,7 +321,7 @@ watch(
           <Button
             size="small"
             :loading="isLoading"
-            :label="t('CAPTAIN.ASSISTANTS.FORM.UPDATE')"
+            :label="t('CAPTAIN.TOPICS.FORM.UPDATE')"
             @click="handleFeaturesUpdate"
           />
         </div>

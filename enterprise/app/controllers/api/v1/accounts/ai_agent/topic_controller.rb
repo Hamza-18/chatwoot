@@ -1,30 +1,30 @@
-class Api::V1::Accounts::Captain::AssistantsController < Api::V1::Accounts::BaseController
+class Api::V1::Accounts::Captain::TopicsController < Api::V1::Accounts::BaseController
   before_action :current_account
-  before_action -> { check_authorization(Captain::Assistant) }
+  before_action -> { check_authorization(Captain::Topic) }
 
-  before_action :set_assistant, only: [:show, :update, :destroy, :playground]
+  before_action :set_topic, only: [:show, :update, :destroy, :playground]
 
   def index
-    @assistants = account_assistants.ordered
+    @topics = account_topics.ordered
   end
 
   def show; end
 
   def create
-    @assistant = account_assistants.create!(assistant_params)
+    @topic = account_topics.create!(topic_params)
   end
 
   def update
-    @assistant.update!(assistant_params)
+    @topic.update!(topic_params)
   end
 
   def destroy
-    @assistant.destroy
+    @topic.destroy
     head :no_content
   end
 
   def playground
-    response = Captain::Llm::AssistantChatService.new(assistant: @assistant).generate_response(
+    response = Captain::Llm::TopicChatService.new(topic: @topic).generate_response(
       params[:message_content],
       message_history
     )
@@ -34,16 +34,16 @@ class Api::V1::Accounts::Captain::AssistantsController < Api::V1::Accounts::Base
 
   private
 
-  def set_assistant
-    @assistant = account_assistants.find(params[:id])
+  def set_topic
+    @topic = account_topics.find(params[:id])
   end
 
-  def account_assistants
-    @account_assistants ||= Captain::Assistant.for_account(Current.account.id)
+  def account_topics
+    @account_topics ||= Captain::Topic.for_account(Current.account.id)
   end
 
-  def assistant_params
-    params.require(:assistant).permit(:name, :description,
+  def topic_params
+    params.require(:topic).permit(:name, :description,
                                       config: [
                                         :product_name, :feature_faq, :feature_memory,
                                         :welcome_message, :handoff_message, :resolution_message,
@@ -52,7 +52,7 @@ class Api::V1::Accounts::Captain::AssistantsController < Api::V1::Accounts::Base
   end
 
   def playground_params
-    params.require(:assistant).permit(:message_content, message_history: [:role, :content])
+    params.require(:topic).permit(:message_content, message_history: [:role, :content])
   end
 
   def message_history

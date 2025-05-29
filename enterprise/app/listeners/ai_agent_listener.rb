@@ -3,11 +3,11 @@ class CaptainListener < BaseListener
 
   def conversation_resolved(event)
     conversation = extract_conversation_and_account(event)[0]
-    assistant = conversation.inbox.captain_assistant
+    topic = conversation.inbox.captain_topic
 
     return unless conversation.inbox.captain_active?
 
-    Captain::Llm::ContactNotesService.new(assistant, conversation).generate_and_update_notes if assistant.config['feature_memory'].present?
-    Captain::Llm::ConversationFaqService.new(assistant, conversation).generate_and_deduplicate if assistant.config['feature_faq'].present?
+    Captain::Llm::ContactNotesService.new(topic, conversation).generate_and_update_notes if topic.config['feature_memory'].present?
+    Captain::Llm::ConversationFaqService.new(topic, conversation).generate_and_deduplicate if topic.config['feature_faq'].present?
   end
 end

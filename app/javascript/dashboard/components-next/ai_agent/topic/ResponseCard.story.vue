@@ -5,7 +5,7 @@ import { responsesList } from 'dashboard/components-next/captain/pageComponents/
 
 <template>
   <Story
-    title="Captain/Assistant/ResponseCard"
+    title="Captain/Topic/ResponseCard"
     :layout="{ type: 'grid', width: '700px' }"
   >
     <Variant title="Article Card">
@@ -19,7 +19,7 @@ import { responsesList } from 'dashboard/components-next/captain/pageComponents/
           :question="response.question"
           :answer="response.answer"
           :status="response.status"
-          :assistant="response.assistant"
+          :topic="response.topic"
           :created-at="response.created_at"
         />
       </div>

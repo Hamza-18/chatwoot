@@ -31,7 +31,7 @@ const getMessageDirection = sender =>
 const getAvatarName = sender =>
   isUserMessage(sender)
     ? t('CAPTAIN.PLAYGROUND.USER')
-    : t('CAPTAIN.PLAYGROUND.ASSISTANT');
+    : t('CAPTAIN.PLAYGROUND.TOPIC');
 
 const getMessageStyle = sender =>
   isUserMessage(sender)
@@ -71,7 +71,7 @@ watch(() => props.messages.length, scrollToBottom);
     </div>
     <div v-if="isLoading" class="flex justify-start">
       <div class="flex items-start gap-1.5">
-        <Avatar :name="getAvatarName('assistant')" rounded-full :size="24" />
+        <Avatar :name="getAvatarName('topic')" rounded-full :size="24" />
         <div
           class="max-w-sm rounded-lg p-3 text-sm bg-n-solid-iris text-n-slate-12"
         >

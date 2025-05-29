@@ -1,12 +1,12 @@
 class Captain::Tools::SimplePageCrawlParserJob < ApplicationJob
   queue_as :low
 
-  def perform(assistant_id:, page_link:)
-    assistant = Captain::Assistant.find(assistant_id)
-    account = assistant.account
+  def perform(topic_id:, page_link:)
+    topic = Captain::Topic.find(topic_id)
+    account = topic.account
 
     if limit_exceeded?(account)
-      Rails.logger.info("Document limit exceeded for #{assistant_id}")
+      Rails.logger.info("Document limit exceeded for #{topic_id}")
       return
     end
 
@@ -15,7 +15,7 @@ class Captain::Tools::SimplePageCrawlParserJob < ApplicationJob
     page_title = crawler.page_title || ''
     content = crawler.body_text_content || ''
 
-    document = assistant.documents.find_or_initialize_by(
+    document = topic.documents.find_or_initialize_by(
       external_link: page_link
     )
 

@@ -3,6 +3,6 @@ FactoryBot.define do
     account
     user
     title { Faker::Lorem.sentence }
-    assistant { create(:captain_assistant, account: account) }
+    topic { create(:captain_topic, account: account) }
   end
 end

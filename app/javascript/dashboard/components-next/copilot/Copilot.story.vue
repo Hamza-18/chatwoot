@@ -16,9 +16,9 @@ const messages = ref([
   },
   {
     id: 2,
-    role: 'assistant',
+    role: 'topic',
     content:
-      "Hello! I'm the AI assistant. I'll be helping the support team today.",
+      "Hello! I'm the AI topic. I'll be helping the support team today.",
   },
 ]);
 
@@ -38,7 +38,7 @@ const sendMessage = message => {
     isCaptainTyping.value = false;
     messages.value.push({
       id: messages.value.length + 1,
-      role: 'assistant',
+      role: 'topic',
       content: 'This is a simulated AI response.',
     });
   }, 2000);

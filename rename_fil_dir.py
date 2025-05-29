@@ -1,12 +1,12 @@
 import os
 
-def rename_captain_assistant_file_path():
+def rename_captain_topic_file_path():
     for root, dirs, files in os.walk(".", topdown=True):
         # Skip unwanted directories
         dirs[:] = [d for d in dirs if d not in  ["node_modules", "circleci", "dependabot",".devcontainer",".github", ".husky", ".vscode",".windsurf", "bin"]]
         for file in files:
             old_file_path = os.path.join(root, file)
-            keywords = [("captain", ("aiAgent", "ai_agent","ai-agent")), ("assistant", ("topic","topic","topic")),("Captain",("AiAgent")), ("Assistant", ("Topic"))]
+            keywords = [("captain", ("aiAgent", "ai_agent","ai-agent")), ("topic", ("topic","topic","topic")),("Captain",("AiAgent")), ("Topic", ("Topic"))]
             new_file_name = file
             renamed = False
             for i in range(len(keywords)):
@@ -36,7 +36,7 @@ def rename_captain_assistant_file_path():
 
          # Rename directories
         for dir in dirs:
-            dir_keywords = [("captain","ai_agent"),("assistant", "topic")]
+            dir_keywords = [("captain","ai_agent"),("topic", "topic")]
             old_dir_path = os.path.join(root, dir)
             new_dir_name = dir
             renamed = False
@@ -53,4 +53,4 @@ def rename_captain_assistant_file_path():
                 print(f"Renamed to '{new_dir_path}'")
 
 if __name__ == "__main__":
-    rename_captain_assistant_file_path()
+    rename_captain_topic_file_path()

@@ -1,12 +1,12 @@
 require 'openai'
 
-class Captain::Llm::AssistantChatService < Llm::BaseOpenAiService
+class Captain::Llm::TopicChatService < Llm::BaseOpenAiService
   include Captain::ChatHelper
 
-  def initialize(assistant: nil)
+  def initialize(topic: nil)
     super()
 
-    @assistant = assistant
+    @topic = topic
     @messages = [system_message]
     @response = ''
     register_tools
@@ -21,18 +21,18 @@ class Captain::Llm::AssistantChatService < Llm::BaseOpenAiService
   private
 
   def register_tools
-    @tool_registry = Captain::ToolRegistryService.new(@assistant, user: nil)
+    @tool_registry = Captain::ToolRegistryService.new(@topic, user: nil)
     @tool_registry.register_tool(Captain::Tools::SearchDocumentationService)
   end
 
   def system_message
     {
       role: 'system',
-      content: Captain::Llm::SystemPromptsService.assistant_response_generator(@assistant.name, @assistant.config['product_name'], @assistant.config)
+      content: Captain::Llm::SystemPromptsService.topic_response_generator(@topic.name, @topic.config['product_name'], @topic.config)
     }
   end
 
-  def persist_message(message, message_type = 'assistant')
+  def persist_message(message, message_type = 'topic')
     # No need to implement
   end
 end

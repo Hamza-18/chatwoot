@@ -15,7 +15,7 @@ const props = defineProps({
     required: true,
     validator: value => ['edit', 'create'].includes(value),
   },
-  assistant: {
+  topic: {
     type: Object,
     default: () => ({}),
   },
@@ -26,7 +26,7 @@ const emit = defineEmits(['submit', 'cancel']);
 const { t } = useI18n();
 
 const formState = {
-  uiFlags: useMapGetter('captainAssistants/getUIFlags'),
+  uiFlags: useMapGetter('captainTopics/getUIFlags'),
 };
 
 const initialState = {
@@ -51,7 +51,7 @@ const isLoading = computed(() => formState.uiFlags.value.creatingItem);
 
 const getErrorMessage = (field, errorKey) => {
   return v$.value[field].$error
-    ? t(`CAPTAIN.ASSISTANTS.FORM.${errorKey}.ERROR`)
+    ? t(`CAPTAIN.TOPICS.FORM.${errorKey}.ERROR`)
     : '';
 };
 
@@ -63,7 +63,7 @@ const formErrors = computed(() => ({
 
 const handleCancel = () => emit('cancel');
 
-const prepareAssistantDetails = () => ({
+const prepareTopicDetails = () => ({
   name: state.name,
   description: state.description,
   config: {
@@ -79,13 +79,13 @@ const handleSubmit = async () => {
     return;
   }
 
-  emit('submit', prepareAssistantDetails());
+  emit('submit', prepareTopicDetails());
 };
 
-const updateStateFromAssistant = assistant => {
-  if (!assistant) return;
+const updateStateFromTopic = topic => {
+  if (!topic) return;
 
-  const { name, description, config } = assistant;
+  const { name, description, config } = topic;
 
   Object.assign(state, {
     name,
@@ -97,10 +97,10 @@ const updateStateFromAssistant = assistant => {
 };
 
 watch(
-  () => props.assistant,
-  newAssistant => {
-    if (props.mode === 'edit' && newAssistant) {
-      updateStateFromAssistant(newAssistant);
+  () => props.topic,
+  newTopic => {
+    if (props.mode === 'edit' && newTopic) {
+      updateStateFromTopic(newTopic);
     }
   },
   { immediate: true }
@@ -111,44 +111,44 @@ watch(
   <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
     <Input
       v-model="state.name"
-      :label="t('CAPTAIN.ASSISTANTS.FORM.NAME.LABEL')"
-      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.NAME.PLACEHOLDER')"
+      :label="t('CAPTAIN.TOPICS.FORM.NAME.LABEL')"
+      :placeholder="t('CAPTAIN.TOPICS.FORM.NAME.PLACEHOLDER')"
       :message="formErrors.name"
       :message-type="formErrors.name ? 'error' : 'info'"
     />
 
     <Editor
       v-model="state.description"
-      :label="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.LABEL')"
-      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.PLACEHOLDER')"
+      :label="t('CAPTAIN.TOPICS.FORM.DESCRIPTION.LABEL')"
+      :placeholder="t('CAPTAIN.TOPICS.FORM.DESCRIPTION.PLACEHOLDER')"
       :message="formErrors.description"
       :message-type="formErrors.description ? 'error' : 'info'"
     />
 
     <Input
       v-model="state.productName"
-      :label="t('CAPTAIN.ASSISTANTS.FORM.PRODUCT_NAME.LABEL')"
-      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.PRODUCT_NAME.PLACEHOLDER')"
+      :label="t('CAPTAIN.TOPICS.FORM.PRODUCT_NAME.LABEL')"
+      :placeholder="t('CAPTAIN.TOPICS.FORM.PRODUCT_NAME.PLACEHOLDER')"
       :message="formErrors.productName"
       :message-type="formErrors.productName ? 'error' : 'info'"
     />
 
     <fieldset class="flex flex-col gap-2.5">
       <legend class="mb-3 text-sm font-medium text-n-slate-12">
-        {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.TITLE') }}
+        {{ t('CAPTAIN.TOPICS.FORM.FEATURES.TITLE') }}
       </legend>
 
       <label class="flex items-center gap-2">
         <input v-model="state.featureFaq" type="checkbox" />
         <span class="text-sm font-medium text-n-slate-12">
-          {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.ALLOW_CONVERSATION_FAQS') }}
+          {{ t('CAPTAIN.TOPICS.FORM.FEATURES.ALLOW_CONVERSATION_FAQS') }}
         </span>
       </label>
 
       <label class="flex items-center gap-2">
         <input v-model="state.featureMemory" type="checkbox" />
         <span class="text-sm font-medium text-n-slate-12">
-          {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.ALLOW_MEMORIES') }}
+          {{ t('CAPTAIN.TOPICS.FORM.FEATURES.ALLOW_MEMORIES') }}
         </span>
       </label>
     </fieldset>

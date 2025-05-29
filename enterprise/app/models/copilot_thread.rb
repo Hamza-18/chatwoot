@@ -19,7 +19,7 @@
 class CopilotThread < ApplicationRecord
   belongs_to :user
   belongs_to :account
-  belongs_to :assistant, class_name: 'Captain::Assistant'
+  belongs_to :topic, class_name: 'Captain::Topic'
   has_many :copilot_messages, dependent: :destroy_async
 
   validates :title, presence: true
@@ -36,7 +36,7 @@ class CopilotThread < ApplicationRecord
 
   def previous_history
     copilot_messages
-      .where(message_type: %w[user assistant])
+      .where(message_type: %w[user topic])
       .order(created_at: :asc)
       .map do |copilot_message|
         {

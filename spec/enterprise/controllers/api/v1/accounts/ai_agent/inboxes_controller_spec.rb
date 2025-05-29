@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'Api::V1::Accounts::Captain::Inboxes', type: :request do
   let(:account) { create(:account) }
-  let(:assistant) { create(:captain_assistant, account: account) }
+  let(:topic) { create(:captain_topic, account: account) }
   let(:inbox) { create(:inbox, account: account) }
   let(:inbox2) { create(:inbox, account: account) }
-  let!(:captain_inbox) { create(:captain_inbox, captain_assistant: assistant, inbox: inbox) }
+  let!(:captain_inbox) { create(:captain_inbox, captain_topic: topic, inbox: inbox) }
   let(:admin) { create(:user, account: account, role: :administrator) }
   let(:agent) { create(:user, account: account, role: :agent) }
 
@@ -13,10 +13,10 @@ RSpec.describe 'Api::V1::Accounts::Captain::Inboxes', type: :request do
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  describe 'GET /api/v1/accounts/:account_id/captain/assistants/:assistant_id/inboxes' do
+  describe 'GET /api/v1/accounts/:account_id/captain/topics/:topic_id/inboxes' do
     context 'when user is authorized' do
-      it 'returns a list of inboxes for the assistant' do
-        get "/api/v1/accounts/#{account.id}/captain/assistants/#{assistant.id}/inboxes",
+      it 'returns a list of inboxes for the topic' do
+        get "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}/inboxes",
             headers: agent.create_new_auth_token
 
         expect(response).to have_http_status(:ok)
@@ -26,15 +26,15 @@ RSpec.describe 'Api::V1::Accounts::Captain::Inboxes', type: :request do
 
     context 'when user is unauthorized' do
       it 'returns unauthorized status' do
-        get "/api/v1/accounts/#{account.id}/captain/assistants/#{assistant.id}/inboxes"
+        get "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}/inboxes"
 
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
-    context 'when assistant does not exist' do
+    context 'when topic does not exist' do
       it 'returns not found status' do
-        get "/api/v1/accounts/#{account.id}/captain/assistants/999999/inboxes",
+        get "/api/v1/accounts/#{account.id}/captain/topics/999999/inboxes",
             headers: agent.create_new_auth_token
 
         expect(response).to have_http_status(:not_found)
@@ -42,7 +42,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Inboxes', type: :request do
     end
   end
 
-  describe 'POST /api/v1/accounts/:account/captain/assistants/:assistant_id/inboxes' do
+  describe 'POST /api/v1/accounts/:account/captain/topics/:topic_id/inboxes' do
     let(:valid_params) do
       {
         inbox: {
@@ -54,7 +54,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Inboxes', type: :request do
     context 'when user is authorized' do
       it 'creates a new captain inbox' do
         expect do
-          post "/api/v1/accounts/#{account.id}/captain/assistants/#{assistant.id}/inboxes",
+          post "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}/inboxes",
                params: valid_params,
                headers: admin.create_new_auth_token
         end.to change(CaptainInbox, :count).by(1)
@@ -65,7 +65,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Inboxes', type: :request do
 
       context 'when inbox does not exist' do
         it 'returns not found status' do
-          post "/api/v1/accounts/#{account.id}/captain/assistants/#{assistant.id}/inboxes",
+          post "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}/inboxes",
                params: { inbox: { inbox_id: 999_999 } },
                headers: admin.create_new_auth_token
 
@@ -75,7 +75,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Inboxes', type: :request do
 
       context 'when params are invalid' do
         it 'returns unprocessable entity status' do
-          post "/api/v1/accounts/#{account.id}/captain/assistants/#{assistant.id}/inboxes",
+          post "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}/inboxes",
                params: {},
                headers: admin.create_new_auth_token
 
@@ -86,7 +86,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Inboxes', type: :request do
 
     context 'when user is agent' do
       it 'returns unauthorized status' do
-        post "/api/v1/accounts/#{account.id}/captain/assistants/#{assistant.id}/inboxes",
+        post "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}/inboxes",
              params: valid_params,
              headers: agent.create_new_auth_token
 
@@ -95,11 +95,11 @@ RSpec.describe 'Api::V1::Accounts::Captain::Inboxes', type: :request do
     end
   end
 
-  describe 'DELETE /api/v1/accounts/captain/assistants/:assistant_id/inboxes/:inbox_id' do
+  describe 'DELETE /api/v1/accounts/captain/topics/:topic_id/inboxes/:inbox_id' do
     context 'when user is authorized' do
       it 'deletes the captain inbox' do
         expect do
-          delete "/api/v1/accounts/#{account.id}/captain/assistants/#{assistant.id}/inboxes/#{inbox.id}",
+          delete "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}/inboxes/#{inbox.id}",
                  headers: admin.create_new_auth_token
         end.to change(CaptainInbox, :count).by(-1)
 
@@ -108,7 +108,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Inboxes', type: :request do
 
       context 'when captain inbox does not exist' do
         it 'returns not found status' do
-          delete "/api/v1/accounts/#{account.id}/captain/assistants/#{assistant.id}/inboxes/999999",
+          delete "/api/v1/accounts/#{account.id}/captain/topics/#{topic.id}/inboxes/999999",
                  headers: admin.create_new_auth_token
 
           expect(response).to have_http_status(:not_found)

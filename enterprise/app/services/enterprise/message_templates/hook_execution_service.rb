@@ -6,12 +6,12 @@ module Enterprise::MessageTemplates::HookExecutionService
 
     Captain::Conversation::ResponseBuilderJob.perform_later(
       conversation,
-      conversation.inbox.captain_assistant
+      conversation.inbox.captain_topic
     )
   end
 
   def should_process_captain_response?
-    conversation.pending? && message.incoming? && inbox.captain_assistant.present?
+    conversation.pending? && message.incoming? && inbox.captain_topic.present?
   end
 
   def perform_handoff

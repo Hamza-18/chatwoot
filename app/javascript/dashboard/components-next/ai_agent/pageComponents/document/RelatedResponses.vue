@@ -4,7 +4,7 @@ import { useStore, useMapGetter } from 'dashboard/composables/store';
 import { useI18n } from 'vue-i18n';
 import Spinner from 'dashboard/components-next/spinner/Spinner.vue';
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
-import ResponseCard from '../../assistant/ResponseCard.vue';
+import ResponseCard from '../../topic/ResponseCard.vue';
 const props = defineProps({
   captainDocument: {
     type: Object,
@@ -26,7 +26,7 @@ const handleClose = () => {
 
 onMounted(() => {
   store.dispatch('captainResponses/get', {
-    assistantId: props.captainDocument.assistant.id,
+    topicId: props.captainDocument.topic.id,
     documentId: props.captainDocument.id,
   });
 });
@@ -59,7 +59,7 @@ defineExpose({ dialogRef });
         :question="response.question"
         :status="response.status"
         :answer="response.answer"
-        :assistant="response.assistant"
+        :topic="response.topic"
         :created-at="response.created_at"
         :updated-at="response.updated_at"
         compact

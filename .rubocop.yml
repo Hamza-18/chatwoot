@@ -117,7 +117,7 @@ Rails/RedundantPresenceValidationOnBelongsTo:
 
 Rails/InverseOf:
   Exclude:
-    - enterprise/app/models/captain/assistant.rb
+    - enterprise/app/models/captain/topic.rb
 
 Rails/UniqueValidationWithoutIndex:
   Exclude:

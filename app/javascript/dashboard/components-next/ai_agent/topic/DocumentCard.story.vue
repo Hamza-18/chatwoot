@@ -5,7 +5,7 @@ import { documentsList } from 'dashboard/components-next/captain/pageComponents/
 
 <template>
   <Story
-    title="Captain/Assistant/DocumentCard"
+    title="Captain/Topic/DocumentCard"
     :layout="{ type: 'grid', width: '700px' }"
   >
     <Variant title="Document Card">
@@ -18,7 +18,7 @@ import { documentsList } from 'dashboard/components-next/captain/pageComponents/
           :id="doc.id"
           :name="doc.name"
           :external-link="doc.external_link"
-          :assistant="doc.assistant"
+          :topic="doc.topic"
           :created-at="doc.created_at"
         />
       </div>
