@@ -17,13 +17,13 @@
 # Indexes
 #
 #  idx_cap_asst_resp_on_documentable                  (documentable_id,documentable_type)
-#  index_ai_agenttopic_responses_on_account_id    (account_id)
-#  index_ai_agenttopic_responses_on_topic_id  (topic_id)
-#  index_ai_agenttopic_responses_on_status        (status)
+#  index_ai_agent_topic_responses_on_account_id    (account_id)
+#  index_ai_agent_topic_responses_on_topic_id  (topic_id)
+#  index_ai_agent_topic_responses_on_status        (status)
 #  vector_idx_knowledge_entries_embedding             (embedding) USING ivfflat
 #
 class AiAgent::TopicResponse < ApplicationRecord
-  self.table_name = 'ai_agenttopic_responses'
+  self.table_name = 'ai_agent_topic_responses'
 
   belongs_to :topic, class_name: 'AiAgent::Topic'
   belongs_to :account

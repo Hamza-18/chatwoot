@@ -46,7 +46,7 @@ class Enterprise::Billing::HandleStripeEventService
 
     update_account_attributes(subscription, plan)
     update_plan_features
-    reset_ai_agentusage
+    reset_ai_agent_usage
   end
 
   def update_account_attributes(subscription, plan)
@@ -99,7 +99,7 @@ class Enterprise::Billing::HandleStripeEventService
     enable_plan_specific_features
   end
 
-  def reset_ai_agentusage
+  def reset_ai_agent_usage
     account.reset_response_usage
   end
 

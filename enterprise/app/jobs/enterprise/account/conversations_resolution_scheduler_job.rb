@@ -2,14 +2,14 @@ module Enterprise::Account::ConversationsResolutionSchedulerJob
   def perform
     super
 
-    resolve_ai_agentconversations
+    resolve_ai_agent_conversations
   end
 
   private
 
-  def resolve_ai_agentconversations
-    AiAgentInbox.all.find_each(batch_size: 100) do |ai_agentinbox|
-      inbox = ai_agentinbox.inbox
+  def resolve_ai_agent_conversations
+    AiAgentInbox.all.find_each(batch_size: 100) do |ai_agent_inbox|
+      inbox = ai_agent_inbox.inbox
 
       next if inbox.email?
 

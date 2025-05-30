@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: ai_agentdocuments
+# Table name: ai_agent_documents
 #
 #  id            :bigint           not null, primary key
 #  content       :text
@@ -14,14 +14,14 @@
 #
 # Indexes
 #
-#  index_ai_agentdocuments_on_account_id                      (account_id)
-#  index_ai_agentdocuments_on_topic_id                    (topic_id)
-#  index_ai_agentdocuments_on_topic_id_and_external_link  (topic_id,external_link) UNIQUE
-#  index_ai_agentdocuments_on_status                          (status)
+#  index_ai_agent_documents_on_account_id                      (account_id)
+#  index_ai_agent_documents_on_topic_id                    (topic_id)
+#  index_ai_agent_documents_on_topic_id_and_external_link  (topic_id,external_link) UNIQUE
+#  index_ai_agent_documents_on_status                          (status)
 #
 class AiAgent::Document < ApplicationRecord
   class LimitExceededError < StandardError; end
-  self.table_name = 'ai_agentdocuments'
+  self.table_name = 'ai_agent_documents'
 
   belongs_to :topic, class_name: 'AiAgent::Topic'
   has_many :responses, class_name: 'AiAgent::TopicResponse', dependent: :destroy, as: :documentable

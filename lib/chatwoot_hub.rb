@@ -6,7 +6,7 @@ class ChatwootHub
   PUSH_NOTIFICATION_URL = "#{BASE_URL}/send_push".freeze
   EVENTS_URL = "#{BASE_URL}/events".freeze
   BILLING_URL = "#{BASE_URL}/billing".freeze
-  AI_AGENT_ACCOUNTS_URL = "#{BASE_URL}/instance_ai_agentaccounts".freeze
+  AI_AGENT_ACCOUNTS_URL = "#{BASE_URL}/instance_ai_agent_accounts".freeze
 
   def self.installation_identifier
     identifier = InstallationConfig.find_by(name: 'INSTALLATION_IDENTIFIER')&.value
@@ -92,7 +92,7 @@ class ChatwootHub
     ChatwootExceptionTracker.new(e).capture_exception
   end
 
-  def self.get_ai_agentsettings(account)
+  def self.get_ai_agent_settings(account)
     info = {
       installation_identifier: installation_identifier,
       chatwoot_account_id: account.id,

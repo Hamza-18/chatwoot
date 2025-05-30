@@ -79,7 +79,7 @@ describe ChatwootHub do
         body: { account_email: 'test@test.com', account_id: '123', access_token: '123', topic_id: '123' }.to_json
       )
 
-      expect(described_class.get_ai_agentsettings(account).body).to eq(
+      expect(described_class.get_ai_agent_settings(account).body).to eq(
         {
           account_email: 'test@test.com',
           account_id: '123',

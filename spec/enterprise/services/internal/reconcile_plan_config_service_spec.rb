@@ -11,14 +11,14 @@ RSpec.describe Internal::ReconcilePlanConfigService do
 
       it 'disables the premium features for accounts' do
         account = create(:account)
-        account.enable_features!('disable_branding', 'audit_logs', 'ai_agentintegration')
+        account.enable_features!('disable_branding', 'audit_logs', 'ai_agent_integration')
         account_with_ai_agent = create(:account)
-        account_with_ai_agent.enable_features!('ai_agentintegration')
+        account_with_ai_agent.enable_features!('ai_agent_integration')
         disable_branding_account = create(:account)
         disable_branding_account.enable_features!('disable_branding')
         service.perform
-        expect(account.reload.enabled_features.keys).not_to include('ai_agentintegration', 'disable_branding', 'audit_logs')
-        expect(account_with_ai_agent.reload.enabled_features.keys).not_to include('ai_agentintegration')
+        expect(account.reload.enabled_features.keys).not_to include('ai_agent_integration', 'disable_branding', 'audit_logs')
+        expect(account_with_ai_agent.reload.enabled_features.keys).not_to include('ai_agent_integration')
         expect(disable_branding_account.reload.enabled_features.keys).not_to include('disable_branding')
       end
 
@@ -62,8 +62,8 @@ RSpec.describe Internal::ReconcilePlanConfigService do
         disable_branding_account = create(:account)
         disable_branding_account.enable_features!('disable_branding')
         service.perform
-        expect(account.reload.enabled_features.keys).to include('ai_agentintegration', 'disable_branding', 'audit_logs')
-        expect(account_with_ai_agent.reload.enabled_features.keys).to include('ai_agentintegration')
+        expect(account.reload.enabled_features.keys).to include('ai_agent_integration', 'disable_branding', 'audit_logs')
+        expect(account_with_ai_agent.reload.enabled_features.keys).to include('ai_agent_integration')
         expect(disable_branding_account.reload.enabled_features.keys).to include('disable_branding')
       end
 

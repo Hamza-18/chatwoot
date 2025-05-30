@@ -1,16 +1,16 @@
 module Enterprise::Account::PlanUsageAndLimits
-  AI_AGENT_RESPONSES = 'ai_agentresponses'.freeze
-  AI_AGENT_DOCUMENTS = 'ai_agentdocuments'.freeze
-  AI_AGENT_RESPONSES_USAGE = 'ai_agentresponses_usage'.freeze
-  AI_AGENT_DOCUMENTS_USAGE = 'ai_agentdocuments_usage'.freeze
+  AI_AGENT_RESPONSES = 'ai_agent_responses'.freeze
+  AI_AGENT_DOCUMENTS = 'ai_agent_documents'.freeze
+  AI_AGENT_RESPONSES_USAGE = 'ai_agent_responses_usage'.freeze
+  AI_AGENT_DOCUMENTS_USAGE = 'ai_agent_documents_usage'.freeze
 
   def usage_limits
     {
       agents: agent_limits.to_i,
       inboxes: get_limits(:inboxes).to_i,
       ai_agent: {
-        documents: get_ai_agentlimits(:documents),
-        responses: get_ai_agentlimits(:responses)
+        documents: get_ai_agent_limits(:documents),
+        responses: get_ai_agent_limits(:responses)
       }
     }
   end
@@ -28,7 +28,7 @@ module Enterprise::Account::PlanUsageAndLimits
 
   def update_document_usage
     # this will ensure that the document count is always accurate
-    custom_attributes[AI_AGENT_DOCUMENTS_USAGE] = ai_agentdocuments.count
+    custom_attributes[AI_AGENT_DOCUMENTS_USAGE] = ai_agent_documents.count
     save
   end
 
@@ -39,8 +39,8 @@ module Enterprise::Account::PlanUsageAndLimits
     plan_features[plan_name]
   end
 
-  def ai_agentmonthly_limit
-    default_limits = default_ai_agentlimits
+  def ai_agent_monthly_limit
+    default_limits = default_ai_agent_limits
 
     {
       documents: self[:limits][AI_AGENT_DOCUMENTS] || default_limits['documents'],
@@ -50,8 +50,8 @@ module Enterprise::Account::PlanUsageAndLimits
 
   private
 
-  def get_ai_agentlimits(type)
-    total_count = ai_agentmonthly_limit[type.to_s].to_i
+  def get_ai_agent_limits(type)
+    total_count = ai_agent_monthly_limit[type.to_s].to_i
 
     consumed = if type == :documents
                  custom_attributes[AI_AGENT_DOCUMENTS_USAGE].to_i || 0
@@ -68,7 +68,7 @@ module Enterprise::Account::PlanUsageAndLimits
     }
   end
 
-  def default_ai_agentlimits
+  def default_ai_agent_limits
     max_limits = { documents: ChatwootApp.max_limit, responses: ChatwootApp.max_limit }.with_indifferent_access
     zero_limits = { documents: 0, responses: 0 }.with_indifferent_access
     plan_quota = InstallationConfig.find_by(name: 'AI_AGENT_CLOUD_PLAN_LIMITS')&.value
@@ -118,8 +118,8 @@ module Enterprise::Account::PlanUsageAndLimits
       'properties' => {
         'inboxes' => { 'type': 'number' },
         'agents' => { 'type': 'number' },
-        'ai_agentresponses' => { 'type': 'number' },
-        'ai_agentdocuments' => { 'type': 'number' }
+        'ai_agent_responses' => { 'type': 'number' },
+        'ai_agent_documents' => { 'type': 'number' }
       },
       'required' => [],
       'additionalProperties' => false

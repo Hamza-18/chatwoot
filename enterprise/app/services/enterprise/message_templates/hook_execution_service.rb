@@ -1,17 +1,17 @@
 module Enterprise::MessageTemplates::HookExecutionService
   def trigger_templates
     super
-    return unless should_process_ai_agentresponse?
-    return perform_handoff unless inbox.ai_agentactive?
+    return unless should_process_ai_agent_response?
+    return perform_handoff unless inbox.ai_agent_active?
 
     AiAgent::Conversation::ResponseBuilderJob.perform_later(
       conversation,
-      conversation.inbox.ai_agenttopic
+      conversation.inbox.ai_agent_topic
     )
   end
 
-  def should_process_ai_agentresponse?
-    conversation.pending? && message.incoming? && inbox.ai_agenttopic.present?
+  def should_process_ai_agent_response?
+    conversation.pending? && message.incoming? && inbox.ai_agent_topic.present?
   end
 
   def perform_handoff

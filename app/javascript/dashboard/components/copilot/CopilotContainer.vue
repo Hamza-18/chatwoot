@@ -28,7 +28,7 @@ const isAiAgentTyping = ref(false);
 const selectedTopicId = ref(null);
 
 const activeTopic = computed(() => {
-  const preferredId = uiSettings.value.preferred_ai_agenttopic_id;
+  const preferredId = uiSettings.value.preferred_ai_agent_topic_id;
 
   // If the user has selected a specific topic, it takes first preference for Copilot.
   if (preferredId) {
@@ -51,7 +51,7 @@ const activeTopic = computed(() => {
 const setTopic = async topic => {
   selectedTopicId.value = topic.id;
   await updateUISettings({
-    preferred_ai_agenttopic_id: topic.id,
+    preferred_ai_agent_topic_id: topic.id,
   });
 };
 
