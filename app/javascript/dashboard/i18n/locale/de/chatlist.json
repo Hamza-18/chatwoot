@@ -134,6 +134,8 @@
     "HIDE_QUOTED_TEXT": "Zitierten Text ausblenden",
     "SHOW_QUOTED_TEXT": "Zitierten Text anzeigen",
     "MESSAGE_READ": "Lesen",
-    "SENDING": "Sende"
+    "SENDING": "Sende",
+    "FORWARDED_FROM": "Forwarded from {name}"  
+
   }
 }

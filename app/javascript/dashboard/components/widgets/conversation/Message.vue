@@ -509,6 +509,18 @@ export default {
             />
           </svg>
         </span>
+        <div
+          v-if="contentAttributes.forwarded"
+          class="forwarded-header flex items-center text-xs text-slate-500 dark:text-slate-400 mb-1"
+        >
+          <span>
+            {{
+              $t('CHAT_LIST.FORWARDED_FROM', {
+                name: contentAttributes.forwarded_from,
+              })
+            }}
+          </span>
+        </div>
         <BubbleMailHead
           :email-attributes="contentAttributes.email"
           :cc="emailHeadAttributes.cc"

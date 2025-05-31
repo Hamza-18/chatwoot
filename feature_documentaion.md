@@ -29,6 +29,7 @@
 	  end
 	end
 	```
+	![alt text](<Screenshot from 2025-05-31 15-11-45.png>)
 - **Updating the Theme.**
   I used DevTools to inspect the CSS selector, then jumped straight to that spot in the code base. Found three files responsible for the theme _variables.scss, _next-colors.css, _woot.scss
 - **_next-colors.scss**  
@@ -90,6 +91,8 @@
      By annotating each step with its purpose (e.g., “Button hover / tags,” “Active icons / highlights,” “Borders / focus ring,” etc.), it becomes immediately clear which shade to reference in a given component or variant.
 - **_variables.scss (Administrate library)**  
   This file defines core UI variables used by the Administrate dashboard. In this change, the `$grey-0` variable was updated from a light gray (`#f6f7f7`) to a teal-ish shade (`#12d9d9`), instantly shifting any component or background that relies on `$grey-0` without touching individual styles.
+  ![alt text](<Screenshot from 2025-05-31 15-12-30.png>)
+
 ### Replacing Captain and Assistant
 This task requires refactoring of the whole code base and database to replace captain with ai agent and assistant with topic.
 -   **Migrate Database tables.**
@@ -200,3 +203,6 @@ Since Assistant is a single word so I didn't have to consider different type of 
 	1) ``assistant`` -> ``topic``
 	2) ``Assistant``  -> ``Topic``
 
+	![alt text](<Screenshot from 2025-05-31 15-14-05.png>)
+
+	![alt text](<Screenshot from 2025-05-31 15-14-27.png>)

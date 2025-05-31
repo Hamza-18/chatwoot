@@ -134,6 +134,8 @@
     "HIDE_QUOTED_TEXT": "引用テキストを非表示",
     "SHOW_QUOTED_TEXT": "引用テキストを表示",
     "MESSAGE_READ": "既読",
-    "SENDING": "送信中"
+    "SENDING": "送信中",
+    "FORWARDED_FROM": "Forwarded from {name}"  
+
   }
 }

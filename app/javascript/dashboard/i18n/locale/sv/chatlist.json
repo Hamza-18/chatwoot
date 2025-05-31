@@ -134,6 +134,7 @@
     "HIDE_QUOTED_TEXT": "Dölj citerad text",
     "SHOW_QUOTED_TEXT": "Visa citerad text",
     "MESSAGE_READ": "Read",
-    "SENDING": "Sending"
+    "SENDING": "Sending",
+    "FORWARDED_FROM": "Forwarded from {name}"
   }
 }

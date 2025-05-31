@@ -134,6 +134,7 @@
     "HIDE_QUOTED_TEXT": "隱藏引用文字",
     "SHOW_QUOTED_TEXT": "顯示引用文字",
     "MESSAGE_READ": "Read",
-    "SENDING": "Sending"
+    "SENDING": "Sending",
+    "FORWARDED_FROM": "Forwarded from {name}"
   }
 }

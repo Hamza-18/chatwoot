@@ -134,6 +134,8 @@
     "HIDE_QUOTED_TEXT": "Skjul Citeret Tekst",
     "SHOW_QUOTED_TEXT": "Vis Citeret Tekst",
     "MESSAGE_READ": "Læst",
-    "SENDING": "Sending"
+    "SENDING": "Sending",
+    "FORWARDED_FROM": "Forwarded from {name}"  
+
   }
 }
