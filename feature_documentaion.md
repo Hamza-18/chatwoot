@@ -37,7 +37,7 @@
 
   **Why it matters:**  
   - Centralizes all neutral (“slate”) and accent (“iris”) RGB values in one place.  
-  - Changing any `--slate-*` or `--iris-*` value immediately updates every component that uses it—no need to hunt for scattered hex codes.  
+  - Changing any `--slate-*` or `--iris-*` value immediately updates every component that uses it—no need to look for hex codes in different files.  
   - Enables seamless dark/light toggling by redefining the same variables in a `.dark` block.
 
   **How I updated the theme:**  
@@ -206,3 +206,20 @@ Since Assistant is a single word so I didn't have to consider different type of 
 	![alt text](<Screenshot from 2025-05-31 15-14-05.png>)
 
 	![alt text](<Screenshot from 2025-05-31 15-14-27.png>)
+
+## Task 2: Enhanced Conversation Features
+### Enhance content attributes
+During my investigation, I discovered that each message in the conversation UI has a `content_attributes` field for storing extra metadata—by default, things like whether a message is a reply. Since I’m working with Telegram, I looked at all the additional data we can receive via its webhook. In the app, I verified that we can react to, delete, pin, or edit a message. After testing, I saw that “edit” support was already in place, but we also get webhook events when a message is pinned or forwarded. To surface this in the UI, I decided to populate the `content_attributes` field with “pinned” and “forwarded” flags so those states appear alongside each message.
+![alt text](image.png)
+
+- **Pinned Message**
+	1) When the webhook for a pinned message arrives,. Update existing message which was pinned. Store a flag `pinned` in the content attributes field.
+	2) Update UI to show an icon for pinned message. 
+
+	![alt text](image-1.png)
+- **Forwarded Message**
+	1) when the webhook for a forwarded message arrives, it has property `forwarded_message` with details of the user from whom the message was forwarded.
+	2) Store `first_name` user information in the `content_attributes`.
+	3) Update the UI to show forwarded message.
+
+	![alt text](image-2.png)
