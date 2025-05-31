@@ -13,6 +13,7 @@ class Telegram::IncomingMessageService
     set_contact
     update_contact_avatar
     set_conversation
+    update_prev_msg
     @message = @conversation.messages.build(
       content: telegram_params_message_content,
       account_id: @inbox.account_id,
@@ -175,5 +176,19 @@ class Telegram::IncomingMessageService
 
   def visual_media_params
     params[:message][:photo].presence&.last || params.dig(:message, :sticker, :thumb).presence || params[:message][:video].presence
+  end
+
+  def update_prev_msg
+    # safely access the pinned message ID from the params
+    message_id = params.dig(:message, :pinned_message, :message_id)
+    return unless message_id.present?
+
+    # Find the previous message in the conversation and update its attributes to mark it as pinned
+    prev_msg = @conversation.messages.find_by(source_id: message_id.to_s)
+    return unless prev_msg
+
+    attributes = prev_msg.content_attributes.to_h
+    attributes['pinned'] = true
+    prev_msg.update!(content_attributes: attributes)
   end
 end
