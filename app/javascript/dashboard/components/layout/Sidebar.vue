@@ -219,7 +219,7 @@ export default {
 <template>
   <aside class="flex h-full">
     <PrimarySidebar
-      :logo-source="globalConfig.logoThumbnail?.value"
+      :logo-source="globalConfig.logoThumbnail"
       :installation-name="globalConfig.installationName"
       :is-a-custom-branded-instance="isACustomBrandedInstance"
       :account-id="accountId"
