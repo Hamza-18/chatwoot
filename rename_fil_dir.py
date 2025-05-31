@@ -5,6 +5,7 @@ def rename_captain_assistant_file_path():
         # Skip unwanted directories
         dirs[:] = [d for d in dirs if d not in  ["node_modules", "circleci", "dependabot",".devcontainer",".github", ".husky", ".vscode",".windsurf", "bin"]]
         for file in files:
+            # traverse files in the current directory and rename them
             old_file_path = os.path.join(root, file)
             keywords = [("captain", ("aiAgent", "ai_agent","ai-agent")), ("assistant", ("topic","topic","topic")),("Captain",("AiAgent")), ("Assistant", ("Topic"))]
             new_file_name = file
@@ -13,6 +14,7 @@ def rename_captain_assistant_file_path():
                 old = keywords[i][0]
                 new = keywords[i][1]
                 if old in new_file_name:
+                    # Handle special cases for renaming
                     if old.islower() and old in new_file_name:
                         index = new_file_name.lower().index(old)
                         next_index = len(old) + index
