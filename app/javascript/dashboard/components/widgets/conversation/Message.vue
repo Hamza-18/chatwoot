@@ -474,6 +474,7 @@ export default {
         />
       </div>
       <div :class="bubbleClass" @contextmenu="openContextMenu($event)">
+        <!-- Add icon for pinned message -->
         <span
           v-if="contentAttributes.pinned"
           class="mr-1 mt-0.5 text-yellow-400 items-center"
@@ -509,6 +510,7 @@ export default {
             />
           </svg>
         </span>
+        <!-- Add a section to display its a forwarded message -->
         <div
           v-if="contentAttributes.forwarded"
           class="forwarded-header flex items-center text-xs text-slate-500 dark:text-slate-400 mb-1"

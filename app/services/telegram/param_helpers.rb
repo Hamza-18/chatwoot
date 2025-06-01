@@ -8,6 +8,8 @@ module Telegram::ParamHelpers
 
   def telegram_params_content_attributes
     reply_to = params.dig(:message, :reply_to_message, :message_id)
+    # if the message is forwarded, we can get the original sender's first name
+    # add original sender's first name to the content attributes
     forward_from = params.dig(:message, :forward_from)
     attr = {}
     attr[:forwarded] = true if forward_from
