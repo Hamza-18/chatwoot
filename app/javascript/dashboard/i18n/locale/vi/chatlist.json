@@ -134,6 +134,7 @@
     "HIDE_QUOTED_TEXT": "Ẩn văn bản được trích dẫn",
     "SHOW_QUOTED_TEXT": "Hiện Văn bản được trích dẫn",
     "MESSAGE_READ": "\bĐọc",
-    "SENDING": "Sending"
+    "SENDING": "Sending",
+    "FORWARDED_FROM": "Forwarded from {name}"
   }
 }

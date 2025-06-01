@@ -134,6 +134,8 @@
     "HIDE_QUOTED_TEXT": "Sembunyikan Teks yang Dikutip",
     "SHOW_QUOTED_TEXT": "Tampilkan Teks yang Dikutip",
     "MESSAGE_READ": "Dibaca",
-    "SENDING": "Sending"
+    "SENDING": "Sending",
+    "FORWARDED_FROM": "Forwarded from {name}"  
+
   }
 }

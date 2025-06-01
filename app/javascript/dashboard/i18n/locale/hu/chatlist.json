@@ -134,6 +134,8 @@
     "HIDE_QUOTED_TEXT": "Idézett szöveg eltűntetése",
     "SHOW_QUOTED_TEXT": "Idézett szöveg megjelenítése",
     "MESSAGE_READ": "Olvasott",
-    "SENDING": "Sending"
+    "SENDING": "Sending",
+    "FORWARDED_FROM": "Forwarded from {name}"  
+
   }
 }

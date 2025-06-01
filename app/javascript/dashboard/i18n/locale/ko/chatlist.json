@@ -134,6 +134,8 @@
     "HIDE_QUOTED_TEXT": "인용문 가리기",
     "SHOW_QUOTED_TEXT": "인용문 보이기",
     "MESSAGE_READ": "읽기",
-    "SENDING": "Sending"
+    "SENDING": "Sending",
+    "FORWARDED_FROM": "Forwarded from {name}"  
+
   }
 }

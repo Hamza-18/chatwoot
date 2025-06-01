@@ -134,6 +134,8 @@
     "HIDE_QUOTED_TEXT": "Amaga text entre cometes",
     "SHOW_QUOTED_TEXT": "Mostra text entre cometes",
     "MESSAGE_READ": "Llegir",
-    "SENDING": "Sending"
+    "SENDING": "Sending",
+    "FORWARDED_FROM": "Forwarded from {name}"  
+
   }
 }

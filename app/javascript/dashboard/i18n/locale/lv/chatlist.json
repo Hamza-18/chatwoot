@@ -134,6 +134,8 @@
     "HIDE_QUOTED_TEXT": "Paslēpt Citēto Tekstu",
     "SHOW_QUOTED_TEXT": "Rādīt Citēto Tekstu",
     "MESSAGE_READ": "Lasīt",
-    "SENDING": "Sūtīšana"
+    "SENDING": "Sūtīšana",
+    "FORWARDED_FROM": "Forwarded from {name}"  
+
   }
 }

@@ -134,6 +134,8 @@
     "HIDE_QUOTED_TEXT": "مخفی کردن متن نقل قول شده",
     "SHOW_QUOTED_TEXT": "نمایش متن نقل قول",
     "MESSAGE_READ": "خوانده شده",
-    "SENDING": "در حال ارسال"
+    "SENDING": "در حال ارسال",
+    "FORWARDED_FROM": "Forwarded from {name}"  
+
   }
 }
