@@ -268,19 +268,19 @@
     --color-ash-800: 173 177 184;
     --color-ash-900: 237 238 240;
 
-    --color-primary-25: 10 17 28;
-    --color-primary-50: 15 24 38;
-    --color-primary-75: 15 39 72;
-    --color-primary-100: 10 49 99;
-    --color-primary-200: 18 61 117;
-    --color-primary-300: 29 74 134;
-    --color-primary-400: 40 89 156;
-    --color-primary-500: 48 106 186;
-    --color-primary-600: 39 129 246;
-    --color-primary-700: 21 116 231;
-    --color-primary-800: 126 182 255;
-    --color-primary-900: 205 227 255;
-
+    --color-primary-25: 14 22 30;    // Very dark bluish-gray
+    --color-primary-50: 20 30 40;    // Deep slate-blue
+    --color-primary-75: 30 44 60;    // Stronger presence, still background-suitable
+    --color-primary-100: 40 58 80;   // Subtle blue-gray
+    --color-primary-200: 52 74 103;  // Steel indigo
+    --color-primary-300: 66 94 128;  // Main base tone
+    --color-primary-400: 84 118 158; // Primary accent shade
+    --color-primary-500: 102 140 184; // Button hover / tags
+    --color-primary-600: 118 158 206; // Active icons / highlights
+    --color-primary-700: 138 178 229; // Soft call to action
+    --color-primary-800: 168 204 255; // Borders / focus ring
+    --color-primary-900: 210 232 255; // Lightest tint for contrast text or backgrounds
+    
     --color-ruby-100: 78 19 37;
     --color-ruby-200: 94 26 46;
     --color-ruby-25: 25 17 19;
